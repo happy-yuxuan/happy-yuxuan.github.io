@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>位运算 ~ Victor&#39;s blog</title>
+  <title>Java快速读写模板 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -121,7 +121,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期日, 二月 3日 2019, 3:22 下午
+                  星期三, 二月 19日 2020, 10:01 晚上
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    137 字
+                    591 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      1 分钟
+                      3 分钟
                   </span>&nbsp;
                 
 
@@ -171,32 +171,227 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><p><code>1 &lt;&lt; n</code> 2的n次方</p>
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><pre><code class="lang-c++">// 求n的第k位数字: 
-n &gt;&gt; k &amp; 1
+            <h2 id="刷题快速读写做题模板1"><a href="#刷题快速读写做题模板1" class="headerlink" title="刷题快速读写做题模板1"></a>刷题快速读写做题模板1</h2><pre><code class="lang-java">import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.io.BufferedReader;
 
-// 返回n的最后一位1：（就是n的二进制表示最后一个1出现的位置是1， 其余位置都是0）
-int lowbit(int n) {
-    return n &amp; -n;
+public class Main {
+    static class InputReader {
+        public BufferedReader reader;
+        public StringTokenizer tokenizer;
+
+        public InputReader(InputStream stream) {
+            reader = new BufferedReader(new InputStreamReader(stream), 32768);
+            tokenizer = null;
+        }
+
+        public String nextLine() {
+            while(tokenizer == null || !tokenizer.hasMoreElements()){
+                try {
+                    tokenizer =new StringTokenizer(reader.readLine());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return tokenizer.nextToken(&quot;\n&quot;);
+        }
+
+        public String next() {
+            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+                try {
+                    tokenizer = new StringTokenizer(reader.readLine());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return tokenizer.nextToken();
+        }
+
+        public int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        public long nextLong() {
+            return Long.parseLong(next());
+        }
+
+    }
+    public static void main(String[] args) {
+        InputStream inputStream = System.in;
+        OutputStream outputStream = System.out;
+        InputReader in = new InputReader(inputStream);
+        PrintWriter out = new PrintWriter(outputStream);
+        Solver solver = new Solver();
+        int T = 1;
+        // int T = in.nextInt();
+        for (int i = 1; i &lt;= T; i++) solver.start(T, in, out);
+        out.close();
+    }
+
+    static class Solver {
+        public void start(int testNumber, InputReader in, PrintWriter out) {
+
+        }
+    }
 }
 </code></pre>
-<h2 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h2><h4 id="位1的个数"><a href="#位1的个数" class="headerlink" title="位1的个数"></a><a href="https://leetcode-cn.com/problems/number-of-1-bits/" target="_blank" rel="noopener">位1的个数</a></h4><ul>
-<li>让n减lowbit操作的数（每次减掉了最末尾的1）， 减了多少次到0， 就是多少个1.</li>
-</ul>
-<pre><code class="lang-c++">class Solution {
-public:
-    uint32_t lowbit(uint32_t n) {
-        return n &amp; -n;
+<h2 id="刷题快速读写做题模板2"><a href="#刷题快速读写做题模板2" class="headerlink" title="刷题快速读写做题模板2"></a>刷题快速读写做题模板2</h2><pre><code class="lang-java">import java.io.*;
+import java.util.InputMismatchException;
+
+public class Main {
+
+    static class Solver {
+        public void doing(int testNumber, InputReader in, OutputWriter out) {
+
+        }
     }
 
-    int hammingWeight(uint32_t n) {
-        int ans = 0;
-        for (uint32_t i = n; i != 0; i -= lowbit(i)) {
-            ans++;
-        }
-        return ans;
+    public static void main(String[] args) throws FileNotFoundException {
+//        FileInputStream fis = new FileInputStream(&quot;out/production/interview/in.txt&quot;);
+//        System.setIn(fis);
+        InputReader in = new InputReader(System.in);
+        OutputWriter out = new OutputWriter(System.out);
+        Solver solver = new Solver();
+//        int testCount = Integer.parseInt(in.next());    // many case
+        int testCount = 1;    // one case
+        for (int i = 1; i &lt;= testCount; i++) solver.doing(i, in, out);
+        out.close();
     }
-};
+
+    // ----- IO -----
+    static class InputReader {
+        private InputStream stream;
+        private byte[] buf = new byte[1 &lt;&lt; 16];
+        private int curChar;
+        private int numChars;
+
+        public InputReader(InputStream stream) {
+            this.stream = stream;
+        }
+
+        public int read() {
+            if (this.numChars == -1) {
+                throw new InputMismatchException();
+            } else {
+                if (this.curChar &gt;= this.numChars) {
+                    this.curChar = 0;
+
+                    try {
+                        this.numChars = this.stream.read(this.buf);
+                    } catch (IOException var2) {
+                        throw new InputMismatchException();
+                    }
+
+                    if (this.numChars &lt;= 0) {
+                        return -1;
+                    }
+                }
+
+                return this.buf[this.curChar++];
+            }
+        }
+
+        public int nextInt() {
+            int c;
+            for (c = this.read(); isSpaceChar(c); c = this.read()) {
+                ;
+            }
+
+            byte sgn = 1;
+            if (c == 45) {
+                sgn = -1;
+                c = this.read();
+            }
+
+            int res = 0;
+
+            while (c &gt;= 48 &amp;&amp; c &lt;= 57) {
+                res *= 10;
+                res += c - 48;
+                c = this.read();
+                if (isSpaceChar(c)) {
+                    return res * sgn;
+                }
+            }
+
+            throw new InputMismatchException();
+        }
+
+        public String next() {
+            int c;
+            while (isSpaceChar(c = this.read())) {
+                ;
+            }
+
+            StringBuilder result = new StringBuilder();
+            result.appendCodePoint(c);
+
+            while (!isSpaceChar(c = this.read())) {
+                result.appendCodePoint(c);
+            }
+
+            return result.toString();
+        }
+
+//        long nextLong()
+//        {
+//            return Long.parseLong(next());
+//        }
+//        double nextDouble()
+//        {
+//            return Double.parseDouble(next());
+//        }
+//        BigInteger nextBigInteger()
+//        {
+//            return new BigInteger(next());
+//        }
+//        BigDecimal nextBigDecimal()
+//        {
+//            return new BigDecimal(next());
+//        }
+
+        public static boolean isSpaceChar(int c) {
+            return c == 32 || c == 10 || c == 13 || c == 9 || c == -1;
+        }
+
+    }
+    static class OutputWriter {
+        private final PrintWriter writer;
+
+        public OutputWriter(OutputStream outputStream) {
+            writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
+        }
+
+        public OutputWriter(Writer writer) {
+            this.writer = new PrintWriter(writer);
+        }
+
+        public void printf(String format, Object... objects) {
+            writer.printf(format, objects);
+        }
+
+        public void close() {
+            writer.close();
+        }
+
+    }
+}
+</code></pre>
+<p><code>Integer.parseInt(in.next())</code></p>
+<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><p>将System.out的输入（出）重定向到文件输入（出）</p>
+<pre><code class="lang-java">// 输入
+FileInputStream fis = new FileInputStream(&quot;out/production/interview/in.txt&quot;);
+System.setIn(fis);
+
+// 输出
+PrintStream ps = new PrintStream(new FileOutputStream(&quot;output.txt&quot;));
+System.setOut(ps);
+
+Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
 </code></pre>
 
             <hr>
@@ -208,10 +403,16 @@ public:
               <span>
                 <i class="iconfont icon-inbox"></i>
                 
+                  <a class="hover-with-bg" href="/categories/Java">Java</a>
+                  &nbsp;
+                
                   <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95">算法</a>
                   &nbsp;
                 
-                  <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80">基础</a>
+                  <a class="hover-with-bg" href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>
+                  &nbsp;
+                
+                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -377,7 +578,7 @@ public:
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "位运算&nbsp;",
+        "Java快速读写模板&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

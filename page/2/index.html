@@ -144,44 +144,39 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        <p class="h4 index-header">位运算</p>
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        <p class="h4 index-header">区间合并</p>
       </a>
 
-      <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">位运算1 &lt;&lt; n 2的n次方
-模板// 求n的第k位数字: 
-n &gt;&gt; k &amp; 1
+          <div class="index-text mb-1">区间合并应用合并区间 思路：
 
-// 返回n的最后一位1：（就是n的二进制表示最后一个1出现的位置是1， 其余位置都是0）
-int lowbit(int n) {
-    return n &amp; -n;
-}
+先对区间的左端点进行排序。
 
-经典例题位1的个数
-让n减lowbit操作的数（每次减掉了最末尾的1）， 减了多少次到0， 就是多少个1.
+如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
+
+
+
+新建一个数组保存区间
 
 class Solution {
 public:
-    uint32_t lowbit(uint32_t n) {
-        return n &amp; -n;
-    }
-
-    int hammingWeight(uint32_t n) {
-        int ans = 0;
-        for (uint32_t i = n; i != 0; i -= lowbit(i)) {
-            ans++;
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        if (intervals.size() &lt;= 1) {
+            ans = intervals;
+            return ans;
         }
-        return ans;
-    }
-};
 
-</div>
+        sort(intervals.begin(), intervals.end());
+
+        ans.push_back(intervals[0]);
+        for (int i = 1; i &lt; intervals.si</div>
         </div>
       </a>
 
@@ -272,6 +267,66 @@ int bsearch_1(int l, int r)
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%8F%8C%E6%8C%87%E9%92%88/">
+        <p class="h4 index-header">双指针</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%8F%8C%E6%8C%87%E9%92%88/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">双指针
+双指针的核心：将上一状态指针所表达的信息传递至下一状态，从而减少无谓的搜索。
+一般尾指针是add，头指针是remove
+一般提问求子串（区间）的最长、最短、数量
+
+模板
+对于一个序列，用两个指针维护一段区间(滑动窗口)， 可以相互转换。 （一般）判断最大的时候while里面。有边界情况的时候两个模板可以换着写，可能边界就会消失了。本人比较喜欢固定头
+
+固定尾指针:   i是新的尾指针， j是头指针 （移动的途中，即while循环中是满足条件的）
+int j = 0;
+for (int i = 0; i &lt; n; i++) {
+    // add可能对i进行操作，因为i这个元素要被加入窗口
+    while (j &lt;= i &amp;&amp; check1()) j++;  // remove， 里面都是满足check的区间
+    // 第一个不满足check性质的区间
+}
+
+
+固定头指针， 一般来说两个check是相反的， 即check1 == !check2
+int j = 0;
+for (int i = 0; i &lt; n; i++) {
+  whi</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
         <p class="h4 index-header">前缀和 &amp; 差分</p>
       </a>
@@ -331,37 +386,44 @@ for (int i = 1; i &lt;= n; i++) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/03/%E5%8F%8C%E6%8C%87%E9%92%88/">
-        <p class="h4 index-header">双指针</p>
+      <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+        <p class="h4 index-header">位运算</p>
       </a>
 
-      <a href="/2019/02/03/%E5%8F%8C%E6%8C%87%E9%92%88/">
+      <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">双指针
-双指针的核心：将上一状态指针所表达的信息传递至下一状态，从而减少无谓的搜索。
-一般尾指针是add，头指针是remove
-一般提问求子串（区间）的最长、最短、数量
+          <div class="index-text mb-1">位运算1 &lt;&lt; n 2的n次方
+模板// 求n的第k位数字: 
+n &gt;&gt; k &amp; 1
 
-模板
-对于一个序列，用两个指针维护一段区间(滑动窗口)， 可以相互转换。 （一般）判断最大的时候while里面。有边界情况的时候两个模板可以换着写，可能边界就会消失了。本人比较喜欢固定头
-
-固定尾指针:   i是新的尾指针， j是头指针 （移动的途中，即while循环中是满足条件的）
-int j = 0;
-for (int i = 0; i &lt; n; i++) {
-    // add可能对i进行操作，因为i这个元素要被加入窗口
-    while (j &lt;= i &amp;&amp; check1()) j++;  // remove， 里面都是满足check的区间
-    // 第一个不满足check性质的区间
+// 返回n的最后一位1：（就是n的二进制表示最后一个1出现的位置是1， 其余位置都是0）
+int lowbit(int n) {
+    return n &amp; -n;
 }
 
+经典例题位1的个数
+让n减lowbit操作的数（每次减掉了最末尾的1）， 减了多少次到0， 就是多少个1.
 
-固定头指针， 一般来说两个check是相反的， 即check1 == !check2
-int j = 0;
-for (int i = 0; i &lt; n; i++) {
-  whi</div>
+class Solution {
+public:
+    uint32_t lowbit(uint32_t n) {
+        return n &amp; -n;
+    }
+
+    int hammingWeight(uint32_t n) {
+        int ans = 0;
+        for (uint32_t i = n; i != 0; i -= lowbit(i)) {
+            ans++;
+        }
+        return ans;
+    }
+};
+
+</div>
         </div>
       </a>
 
@@ -559,13 +621,13 @@ int[] a = new int[</div>
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>&nbsp;
-          
             <a href="/categories/Java">Java</a>&nbsp;
           
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
             <a href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>&nbsp;
+          
+            <a href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>&nbsp;
           &nbsp;
         
         

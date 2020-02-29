@@ -469,16 +469,16 @@ s = s.toUpperCase();    // 返回一个新的字符串全部转成大写 --- O(n
               <span>
                 <i class="iconfont icon-inbox"></i>
                 
-                  <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95">算法</a>
-                  &nbsp;
-                
-                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
-                  &nbsp;
-                
                   <a class="hover-with-bg" href="/categories/Java">Java</a>
                   &nbsp;
                 
+                  <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95">算法</a>
+                  &nbsp;
+                
                   <a class="hover-with-bg" href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>
+                  &nbsp;
+                
+                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -520,6 +520,28 @@ s = s.toUpperCase();    // 返回一个新的字符串全部转成大写 --- O(n
       <br><br>
       
       
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: 'cbf8fb8a51aff41416e3',
+      clientSecret: 'b5b2229a80bf94074fbe53aa502edefd17a2ab9c',
+      repo: 'happy-yuxuan.github.io',
+      owner: 'happy-yuxuan',
+      admin: 'happy-yuxuan',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
 
     
   </div>

@@ -291,6 +291,28 @@ public:
       <br><br>
       
       
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: 'cbf8fb8a51aff41416e3',
+      clientSecret: 'b5b2229a80bf94074fbe53aa502edefd17a2ab9c',
+      repo: 'happy-yuxuan.github.io',
+      owner: 'happy-yuxuan',
+      admin: 'happy-yuxuan',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
 
     
   </div>
