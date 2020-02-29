@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>Hello World ~ Victor&#39;s blog</title>
+  <title>并查集 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -121,7 +121,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期六, 二月 29日 2020, 9:09 上午
+                  星期一, 五月 13日 2019, 10:09 晚上
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    75 字
+                    465 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      1 分钟
+                      2 分钟
                   </span>&nbsp;
                 
 
@@ -171,19 +171,95 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="lang-bash">$ hexo new &quot;My New Post&quot;
+            <h1 id="并查集算法实现总结"><a href="#并查集算法实现总结" class="headerlink" title="并查集算法实现总结"></a>并查集算法实现总结</h1><h3 id="朴素版并查集"><a href="#朴素版并查集" class="headerlink" title="朴素版并查集"></a>朴素版并查集</h3><ul>
+<li>询问两个元素是否在同一个集合</li>
+<li>有多少个集合</li>
+</ul>
+<pre><code class="lang-c++">int p[N];    // 下标i为节点编号，p[i]表示该节点的祖宗节点是谁(父辈中任意的一个)
+
+// 初始化
+void initUF() {
+    for (int i = 0; i &lt; n; i++) {
+        p[i] = i;    // 每个节点的祖宗都是自己，自己单独成为一个集合
+    }
+}
+
+// 查：  查找元素所在集合 --- 找到自己最老的祖宗，即根祖宗
+int findR(int x) {
+    if (x != p[x]) {
+        p[x] = findR(p[x]);
+    }
+    return p[x];
+}
+
+// 查 简化写法
+int findR(int x) {
+    return p[x] == x ? x : p[x] = findR(p[x]);
+}
+
+// 并：   合并两个节点所在集合
+void Union(int a, int b) {
+    int ra = findR(a);
+    int rb = findR(b);
+    if (ra != rb) {
+        p[rb] = ra;    // 把b所在集合接到a所在集合
+    }
+}
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="lang-bash">$ hexo server
+<h4 id="vector版本"><a href="#vector版本" class="headerlink" title="vector版本"></a>vector版本</h4><pre><code class="lang-c++">vector&lt;int&gt; p(n);
+
+// init
+iota(p.begin(), p.end(), 0);
+
+// find 
+int findR(intx x) {
+    return p[x] == x ? x : p[x] = findR(p[x]);
+}
+
+// Union
+void Union(int a, int b) {
+    p[findR(b)] = p[findR(a)];
+}
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="lang-bash">$ hexo generate
+<h3 id="维护rootSize的并查集-可拓展维护集合的所有信息，都可以类似这样写"><a href="#维护rootSize的并查集-可拓展维护集合的所有信息，都可以类似这样写" class="headerlink" title="维护rootSize的并查集 (可拓展维护集合的所有信息，都可以类似这样写)"></a>维护rootSize的并查集 (可拓展维护集合的所有信息，都可以类似这样写)</h3><pre><code class="lang-c++">int p[N], rootSize[N];    // rootSize[i]表示i节点所在集合的元素个数， 只有根祖宗的数值才有意义
+
+void initUF() {
+    for (int i = 0; i &lt; n; i++) {
+        p[i] = i;
+        rootSize[i] = 1;    // 开始每个节点是独立的集合，所以大小为1
+    }
+}
+
+int findR(int x) {
+    if (x != p[x]) {
+        p[x] = findR(p[x]);
+    }
+    return p[x];
+}
+
+void Union(int a, int b) {
+    int ra = findR(a);
+    int rb = findR(b);
+    if (ra != rb) {
+        rootSize[ra] += rootSize[rb];    // 在把rb接到ra之前先把rb整个元素大小都送给ra
+        p[rb] = ra;
+    }
+}
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="lang-bash">$ hexo deploy
+<h3 id="获取结构信息"><a href="#获取结构信息" class="headerlink" title="获取结构信息"></a>获取结构信息</h3><pre><code class="lang-c++">// 询问两个元素是否在同一个集合
+bool isConnected(int a, int b) {
+    return findR(a) == findR(b);
+}
+
+// 每个根祖宗的p[]指向得都是自己
+int sizeOfUF() {
+    int res = 0;
+    for (int i = 0; i &lt; n; i++) {
+        if (p[i] == i) res++;
+    }
+    return res;
+}
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
             <hr>
           </div>
@@ -191,6 +267,24 @@
           <div>
             <p>
             
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95">算法</a>
+                  &nbsp;
+                
+                  <a class="hover-with-bg" href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BC%96%E7%A8%8B">编程</a>
+                
+              </span>
             
             </p>
             
@@ -323,7 +417,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Hello World&nbsp;",
+        "并查集&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
@@ -382,6 +476,57 @@
 
 
 
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
 
 
 

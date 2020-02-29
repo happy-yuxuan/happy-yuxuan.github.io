@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>标签 - a ~ Victor&#39;s blog</title>
+  <title>分类 - 算法 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -136,19 +136,85 @@
                 
 
 <div class="list-group">
-<!--  <p class="h4">共计 1 篇文章</p>-->
+<!--  <p class="h4">共计 10 篇文章</p>-->
   <hr>
   
     
       
       <p class="h5">2019</p>
     
-    <a href="/2019/02/28/a/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">a</span>
-      <span style="float: right;">02-28</span>
+    <a href="/2019/05/13/%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">并查集</span>
+      <span style="float: right;">05-13</span>
+    </a>
+  
+    
+    <a href="/2019/05/12/%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">图的构建</span>
+      <span style="float: right;">05-12</span>
+    </a>
+  
+    
+    <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">非递归前中后遍历总结</span>
+      <span style="float: right;">02-20</span>
+    </a>
+  
+    
+    <a href="/2019/02/20/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">单调队列</span>
+      <span style="float: right;">02-20</span>
+    </a>
+  
+    
+    <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">层次遍历</span>
+      <span style="float: right;">02-20</span>
+    </a>
+  
+    
+    <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">单调栈</span>
+      <span style="float: right;">02-05</span>
+    </a>
+  
+    
+    <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">拓扑排序</span>
+      <span style="float: right;">02-05</span>
+    </a>
+  
+    
+    <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">数论</span>
+      <span style="float: right;">02-04</span>
+    </a>
+  
+    
+    <a href="/2019/02/03/%E4%BA%8C%E5%88%86/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">二分</span>
+      <span style="float: right;">02-03</span>
+    </a>
+  
+    
+    <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">前缀和 &amp; 差分</span>
+      <span style="float: right;">02-03</span>
     </a>
   
 </div>
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/categories/%E7%AE%97%E6%B3%95/page/2/">2</a><a class="extend next" rel="next" href="/categories/%E7%AE%97%E6%B3%95/page/2/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -249,7 +315,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签 - a&nbsp;",
+        "分类 - 算法&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
@@ -308,6 +374,57 @@
 
 
 
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
 
 
 

@@ -144,30 +144,36 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/02/29/hello-world/">
-        <p class="h4 index-header">Hello World</p>
+      <a href="/2020/02/29/C-%E4%B9%8Bthis%E6%8C%87%E9%92%88/">
+        <p class="h4 index-header">C++之this指针</p>
       </a>
 
-      <a href="/2020/02/29/hello-world/">
+      <a href="/2020/02/29/C-%E4%B9%8Bthis%E6%8C%87%E9%92%88/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
+          <div class="index-text mb-1">this pointer(指针) in C++
+每一个类的对象来说，成员属性是在每个对象是一个是副本。
+而对于每个对象是共享一个类的成员函数。（this是解决区分谁调用了这个成员函数）
 
-More info: Writing
-Run server$ hexo server
+通俗来说，this指针是用来区分哪一个对象。this指针作为隐藏参数传递给所有非静态成员变量函数调用，而且可以用作所有非静态函数体内部的局部变量。
+静态函数是不能访问有this指针的，他是属于类的。
+作用1初始化对象的成员变量(本地变量与成员变量重名的时候，当然不重名的时候也可以使用)
+#include&lt;iostream&gt; 
+using namespace std; 
 
-More info: Server
-Generate static files$ hexo generate
-
-More info: Generating
-Deploy to remote sites$ hexo deploy
-
-More info: Deployment
-</div>
+/* local variable is same as a member&#39;s name */
+class Test 
+{ 
+private: 
+   int x; 
+public: 
+   void setX (int x) 
+   { 
+       // The &#39;this&#39; pointer is used to retrieve the object&#39;s x 
+       // h</div>
         </div>
       </a>
 
@@ -176,6 +182,16 @@ More info: Deployment
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-29&nbsp;&nbsp;
         
         
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/C++">C++</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
         
       </div>
     </div>
@@ -185,30 +201,349 @@ More info: Deployment
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/28/a/">
-        <p class="h4 index-header">a</p>
+      <a href="/2019/05/13/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+        <p class="h4 index-header">并查集</p>
       </a>
 
-      <a href="/2019/02/28/a/">
+      <a href="/2019/05/13/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">dfasdf sdfd 
+          <div class="index-text mb-1">并查集算法实现总结朴素版并查集
+询问两个元素是否在同一个集合
+有多少个集合
+
+int p[N];    // 下标i为节点编号，p[i]表示该节点的祖宗节点是谁(父辈中任意的一个)
+
+// 初始化
+void initUF() {
+    for (int i = 0; i &lt; n; i++) {
+        p[i] = i;    // 每个节点的祖宗都是自己，自己单独成为一个集合
+    }
+}
+
+// 查：  查找元素所在集合 --- 找到自己最老的祖宗，即根祖宗
+int findR(int x) {
+    if (x != p[x]) {
+        p[x] = findR(p[x]);
+    }
+    return p[x];
+}
+
+// 查 简化写法
+int findR(int x) {
+    return p[x] == x ? x : p[x] = findR(p[x]);
+}
+
+// 并：   合并两个节点所在集合
+void Union(int a, int b) {
+    int ra = findR(a);
+    int rb = fi</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-05-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/05/12/%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA/">
+        <p class="h4 index-header">图的构建</p>
+      </a>
+
+      <a href="/2019/05/12/%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">树 &amp; 图
+树是特殊的图， 无向图是特殊的有向图，所以只需要研究有向图的即可
+
+邻接矩阵(稠密图使用， N^2 跟M是一个规模的时候才使用)优点： 找任意两点是否连通块， 可以多存一维的信息，如g[i][j]可以代表权重  
+构建int g[N][N];    // LeetCode 这样给出 vector&lt;vector&lt;int&gt;&gt; edge
+
+// g[a][b] 存储边a-&gt;b
+void add(int a, int b) {
+    g[a][b] = 1;
+    // g[b][a] = 1;
+}
+
+
+处理自环和重边， 只需要保留最小的一条边就可以了
+
+Dijkstra朴素版本朴素算法: 适合使用邻接矩阵，在边数特别多的时候才使用邻接矩阵的朴素版本时间复杂度为 O( N^2 )  因为n比较小所以使用
+思路：
+
+把出发点u设置成0 dist[u] = 0， 其余点都设置成为 正无穷
+迭代n次(n为节点个数) 将没有确定的点里出发点u最近的点找出来，设为t；
+t加入确定的点中
+用t更新 跟t连接的点的距离(从出发点到该点， 还是t作为中介点</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-05-12&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+        <p class="h4 index-header">层次遍历</p>
+      </a>
+
+      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">二叉树层次遍历模板模板一：以每层为单位操作vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+    vector&lt;vector&lt;int&gt;&gt; ans;
+    if (!root) return ans;
+
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        int siz = q.size();  // 记录当前层有多少个节点
+        vector&lt;int&gt; level;
+        for (int i = 0; i &lt; siz; i++) {  // 让当前层的节点出队， 把下一层的节点放入队列中
+            auto t = q.front(); q.pop();
+            level.push_back(t-&gt;val);
+            if (t-&gt;left) q.push(t-&gt;left);</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%A0%91">树</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/20/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/">
+        <p class="h4 index-header">单调队列</p>
+      </a>
+
+      <a href="/2019/02/20/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">单调队列算法思想：
+维护一个具有单调性质的双端队列（头尾均可添加删除）， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得队列单调， 即可以使用单调队列。 
+
+经典例题滑动窗口最小值和最大值
+以最大值为例（最小值同理）
+对于每一个滑动窗口而言，若来了一个新进来的数字，这个数字若都大于等于之前的数，说明之前的数都不可能是答案，因为新加进来的元素已经比他们大，所以不可能是答案。
+deque&lt;int&gt; q;  // 存放下标
+// 枚举以每个结束的区间[0, i]
+for (int i = 0; i &lt; n; i++) {
+    // 判断队头是否已经被划出窗口
+    if (!q.empty() &amp;&amp; i - k + 1 &gt; q.front()) q.pop_front();
+    // 维护单调队列，把小于当前数的所有下标尾出队
+    while (!q.empty() &amp;&amp; nums[q.back()] &lt;= nums[i]) q.pop_back();
+
+    q.push_back(i); 
+    if</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
+        <p class="h4 index-header">非递归前中后遍历总结</p>
+      </a>
+
+      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">非递归前中后遍历总结
+对于一个二叉树而言，前中后遍历分别对应第1，2，3次访问该节点。如在第一次访问该节点输出就是前序遍历，第二次访问该节点就是中序遍历，第三次访问该节点就是后序遍历。 在网上找到一张有意思的图。
+
+
+用中序遍历的思想实现前后遍历(常用遍历技巧)
+前序遍历vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+    vector&lt;int&gt; ans;
+
+    stack&lt;TreeNode*&gt; stk;
+    auto p = root;
+    while (p || !stk.empty()) {
+        while (p) {
+            ans.push_back(p-&gt;val);  // 前序遍历 ①
+            stk.push(p);
+            p = p-&gt;left;
+        }
+        p = stk.top(); stk.pop();    
+        p = p-&gt;right;
+    </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%A0%91">树</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
+        <p class="h4 index-header">单调栈</p>
+      </a>
+
+      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">单调栈算法思想：
+维护一个具有单调性质的栈， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。
+
+经典例题单调栈
+只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。
+
+for (int i = 0; i &lt; n; i++) {
+    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {
+        stk.pop();
+    }
+    if (stk.empty()) {   // 左边没有比他小的元素
+        printf(&quot;-1 &quot;);
+    } else {   // 栈顶元素是第一个比他小的数
+        printf(&quot;%d &quot;, stk.top());
+    }
+    stk.push(nums[i]);
+}
+
 </div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
         
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
+          &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/a">a</a>&nbsp;
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
           
         
       </div>
@@ -219,68 +554,168 @@ More info: Deployment
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/12/18/STL_Summary/">
-        <p class="h4 index-header">STL Summary</p>
+      <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
+        <p class="h4 index-header">拓扑排序</p>
       </a>
 
-      <a href="/2018/12/18/STL_Summary/">
+      <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">STL &amp; C++刷题技巧
+          <div class="index-text mb-1">拓扑排序算法思想：bfs
+把所有入度为0的点全部放入队列。
+只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。
+把每个入度被减成0的节点放入队列
 
+/* 
+    n 节点个数，下标从1开始
+    graph 邻接表
+    inD 每个节点的入度
+    ans 保存拓扑序
+*/
+bool topsort() {
+    queue&lt;int&gt; q;
+    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列
+        if (inD[i] == 0)
+            q.push(i);
 
-
-容器
-头文件
-方法
-备注
-
-
-
-
-vector
-vector
-push_back/pop_back resize erase front/back begin/ end size/clear/empty []
-resize的参数跟初始化一样
-
-
-list
-list
-push_back/pop_back front/back erase begin/ end size/clear/empty []
-
-
-
-string
-string
-substr +=/push_back find c_str replace size/length/clear/empty []
-getline(cin,s6); 读取字符到遇到换行，空格可读入，知道‘\n’结束. c_str()可以用printf %s输出 to_string() / stoi()/stod()在这个头文件中。  char转成字符串 string(1, c)
-
-
-stack
-stack
-push pop top size/empty
-没有clear， 要一个个弹出
-
-
-queue
-queue
-pus</div>
+    while (!q.empty()) {
+        int t = q.front(); q.pop();  // 拿一个入度为0的点
+        ans.push_back(t);
+        for (int v : graph[t])  // 把以该点t为入度的点的入度减一
+            if (--inD[v] == 0) 
+         </div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-18&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/C++">C++</a>&nbsp;
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
           
-            <a href="/categories/STL">STL</a>&nbsp;
+            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
+        <p class="h4 index-header">数论</p>
+      </a>
+
+      <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">数论快速幂库函数： res = pow(x, n) 
+// n 不能是INT_MIN, 因为负数转成正数做会溢出，要单独判断
+double pow(double x, int n) {
+    if (n &lt; 0) n = -n, x = 1/x;
+
+    double res = 1, t = x;
+    while (n) {
+        if (n &amp; 1) res *= t;
+        t *= t;
+        n &gt;&gt;= 1;
+    }
+    return res;
+}
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E8%AE%BA">数论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        <p class="h4 index-header">区间合并</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">区间合并应用合并区间 思路：
+
+先对区间的左端点进行排序。
+
+如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
+
+
+
+新建一个数组保存区间
+
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        if (intervals.size() &lt;= 1) {
+            ans = intervals;
+            return ans;
+        }
+
+        sort(intervals.begin(), intervals.end());
+
+        ans.push_back(intervals[0]);
+        for (int i = 1; i &lt; intervals.si</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
           &nbsp;
         
         
@@ -294,6 +729,18 @@ pus</div>
   </div>
 
 
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -453,6 +900,57 @@ pus</div>
 
 
 
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
 
 
 
