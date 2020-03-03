@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
@@ -139,6 +139,366 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/03/%E7%BD%91%E7%BB%9C%E5%8A%9F%E8%83%BD/">
+        <p class="h4 index-header">iOS网络功能基础总结</p>
+      </a>
+
+      <a href="/2020/03/03/%E7%BD%91%E7%BB%9C%E5%8A%9F%E8%83%BD/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">App内基本网络流程
+
+NSURL : 封装网络字符串地址
+NSURLRequest : 在NSURL的基础上封装一些参数和基础的设置，形成一个请求
+NSURLSession : NSURLRequest根据NSURLSession提供的一些方法就可以返回服务器的资源数据
+
+URL &amp; NSURL[协议类型]://[服务器器地址]:[端⼝口号]/[资源层级UNIX⽂文件路路径][⽂文件名]?[查询]#[⽚片段ID]对应：http://root:Password1@example.com*:8042/project/index.dtb?type=animal&amp;name=dog#nose
+
+封装成URL通过正则表达式来匹配对应的参数， 封装成规范化的对象
+http网络 / file本地路径
+
+HTTP &amp; NSURLRequest
+Get方法：从指定的资源请求数据。 可缓存、长度限制
+Post方法：向指定的资源提交要被处理的数据。 不缓存、长度无要求
+Http Header：请求和相应的补充信息。 长度、编码类型、压缩方式、事件
+
+把NSURL结合请求的各项需求打包</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_WebKit/">
+        <p class="h4 index-header">App界面 - WebKit</p>
+      </a>
+
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_WebKit/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">App界面 - WebKit一句话作用：把网页url加载到手机上。
+Web基础
+UIWebViewiOS12后弃用。内存系统泄漏，稳定差，WebCore和JSCore Crash较多，对HTML5和CSS3支持较少。
+WebKit
+独立进程，内存。 Crash不影响主App，更多更友好的HTML和CSS支持，采用JIT技术
+
+是一个开源的Web浏览器引擎
+
+iOS中的WebKit.framework就是在WebCore、底层桥接、JSCore引擎等核心模块的基础上，针对iOS平台的项目封装。
+
+WKWebView// 在view中添加一个webView
+[self.view addSubview:({
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(...)];
+    self.webview;
+})];
+
+// webView加载网页
+[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;htt</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          
+            <a href="/categories/WebKit">WebKit</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_%E5%8A%A8%E7%94%BB/">
+        <p class="h4 index-header">App界面 - 动画</p>
+      </a>
+
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_%E5%8A%A8%E7%94%BB/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">App界面 - 动画CoreAnimation - (UIView动画) （UIKit组件自带动画）
+
+UIView动画： 渐隐渐显 位置移动
+UIKit组件自带动画 ：1. UITableViewCell 添加删除 2. UIViewController 切换
+
+UIView动画只要继承自UIView都可以有的动画
+
+解决日常开发80%以上的动画效果，处理基本的Frame、 Alpha、 Transform，
+但不能自定义中间过程，相当于原子操作动画。
+实现步骤：1. 设置动画参数（时间、效果）2.动画终止时属性的最终值
++ (void)animateWithDuration:(NSTimeInterval)duration /* 动画时间 */
+                      delay:(NSTimeInterval)delay /* 动画延迟 */
+     usingSpringWithDamping:(CGFloat)dampingRatio /* 阻尼系数 */
+      initialSpringVelocity:(CGFloat)velocity /* </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          
+            <a href="/categories/%E5%8A%A8%E7%94%BB">动画</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_%E5%B8%B8%E7%94%A8UIKit%E7%BB%84%E4%BB%B6/">
+        <p class="h4 index-header">App界面 - 常用UIKit组件</p>
+      </a>
+
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_%E5%B8%B8%E7%94%A8UIKit%E7%BB%84%E4%BB%B6/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">App界面 - 常用UIKit组件设计模式MVC（开发者使用数据Model驱动）
+界面View （展示） —- UIView
+数据为 —- Model
+Controller管理数据(Model)如何在视图（View）上展示 —- UIViewController
+
+Delegate(相互)
+对类的设计者：在类的流程中暴露出一些方法，可以放用户自定义在这个时候的操作。自定义在这个逻辑。暴露一个delegate的对象给用户，让使用者使用delegate对象实现操作。
+设置self为delegate的接受者，然后根据需求实现delegate的方法。required必须实现。
+
+
+
+
+
+设计者
+使用者
+
+
+
+
+提供一些使用者可以自定义的操作@optional/@required注解提供 @property - delegate在对应的时机，让delegate执行对应的方法
+设置 delegate = self按需实现方法
+
+
+
+
+观察者模式
+定义一种多对多的关系，可以让多个观察者同时监听某一个对象或者对象的属性的变化。
+
+在被监听的对象在状态变化时候，会通知所有的观察者。
+
+跟代理delega</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          
+            <a href="/categories/UIKit">UIKit</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/01/%E8%A7%84%E8%8C%83/">
+        <p class="h4 index-header">一些规范记录</p>
+      </a>
+
+      <a href="/2020/03/01/%E8%A7%84%E8%8C%83/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">规范Xcode工具
+使用 refactor 重命名的时候可以把注释也加上。改完以后有可能会丢失文件报错，需要show in finder 然后查找原文件改名 。
+
+注释最好写出自解释的代码，但一定要加注释的地方（令人迷惑的字符串或者数字等等）。头文件每个类中注释其功能以及其实现的意义（opt + cmd + /）
+
+需要注释地方：： 每个类、 公有方法、 令人迷惑的字符串
+
+编译器指令： #pragma mark  ==  // MARK  
+ // MARK: - xxx 
+// FIXME: - xxx
+ // TODO:有-x代表一个横. 
+// ???:有疑问 
+// !!!: 要注意
+
+
+文件代码结构
+类自身的初始化一般收敛到类本身
+项目文件夹一般按照业务逻辑进行归类
+私有函数在名字前面加 _ 代表其是私有方法
+
+Extension
+XCFormat
+
+可以安装 &amp; 自定义设置（nl_fdef_brace），团队代码统一
+设置快捷键
+
+
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/01/Xcode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">
+        <p class="h4 index-header">Xcode常用快捷键</p>
+      </a>
+
+      <a href="/2020/03/01/Xcode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">个人常用快捷键注释cmd + option + /
+格式化代码自己安装了XCFormatcontrol + cmd + 1
+按名字查找文件shift + cmd + o
+正在打开的界面立刻在 Navigation中找到shift + cmd + j
+切换.h和.m文件control + cmd + ↑ 或 control + cmd + ↓
+回退(前进)到上个光标control + cmd + ←  control + cmd + →
+折叠(展开)代码块opt + cmd + ← opt + cmd + →
+查找当前文件cmd + f
+技巧当一个对象不会被使用的时候在前面声名关键字__unused
+Debug时候打印对象属性打断点，在控制台 po 对象.属性
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/Xcode">Xcode</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -386,350 +746,11 @@ t加入确定的点中
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/20/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/">
-        <p class="h4 index-header">单调队列</p>
-      </a>
-
-      <a href="/2019/02/20/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">单调队列算法思想：
-维护一个具有单调性质的双端队列（头尾均可添加删除）， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得队列单调， 即可以使用单调队列。 
-
-经典例题滑动窗口最小值和最大值
-以最大值为例（最小值同理）
-对于每一个滑动窗口而言，若来了一个新进来的数字，这个数字若都大于等于之前的数，说明之前的数都不可能是答案，因为新加进来的元素已经比他们大，所以不可能是答案。
-deque&lt;int&gt; q;  // 存放下标
-// 枚举以每个结束的区间[0, i]
-for (int i = 0; i &lt; n; i++) {
-    // 判断队头是否已经被划出窗口
-    if (!q.empty() &amp;&amp; i - k + 1 &gt; q.front()) q.pop_front();
-    // 维护单调队列，把小于当前数的所有下标尾出队
-    while (!q.empty() &amp;&amp; nums[q.back()] &lt;= nums[i]) q.pop_back();
-
-    q.push_back(i); 
-    if</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
-        <p class="h4 index-header">非递归前中后遍历总结</p>
-      </a>
-
-      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">非递归前中后遍历总结
-对于一个二叉树而言，前中后遍历分别对应第1，2，3次访问该节点。如在第一次访问该节点输出就是前序遍历，第二次访问该节点就是中序遍历，第三次访问该节点就是后序遍历。 在网上找到一张有意思的图。
-
-
-用中序遍历的思想实现前后遍历(常用遍历技巧)
-前序遍历vector&lt;int&gt; preorderTraversal(TreeNode* root) {
-    vector&lt;int&gt; ans;
-
-    stack&lt;TreeNode*&gt; stk;
-    auto p = root;
-    while (p || !stk.empty()) {
-        while (p) {
-            ans.push_back(p-&gt;val);  // 前序遍历 ①
-            stk.push(p);
-            p = p-&gt;left;
-        }
-        p = stk.top(); stk.pop();    
-        p = p-&gt;right;
-    </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%A0%91">树</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
-        <p class="h4 index-header">层次遍历</p>
-      </a>
-
-      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">二叉树层次遍历模板模板一：以每层为单位操作vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
-    vector&lt;vector&lt;int&gt;&gt; ans;
-    if (!root) return ans;
-
-    queue&lt;TreeNode*&gt; q;
-    q.push(root);
-    while (!q.empty()) {
-        int siz = q.size();  // 记录当前层有多少个节点
-        vector&lt;int&gt; level;
-        for (int i = 0; i &lt; siz; i++) {  // 让当前层的节点出队， 把下一层的节点放入队列中
-            auto t = q.front(); q.pop();
-            level.push_back(t-&gt;val);
-            if (t-&gt;left) q.push(t-&gt;left);</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%A0%91">树</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
-        <p class="h4 index-header">单调栈</p>
-      </a>
-
-      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">单调栈算法思想：
-维护一个具有单调性质的栈， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。
-
-经典例题单调栈
-只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。
-
-for (int i = 0; i &lt; n; i++) {
-    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {
-        stk.pop();
-    }
-    if (stk.empty()) {   // 左边没有比他小的元素
-        printf(&quot;-1 &quot;);
-    } else {   // 栈顶元素是第一个比他小的数
-        printf(&quot;%d &quot;, stk.top());
-    }
-    stk.push(nums[i]);
-}
-
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
-        <p class="h4 index-header">拓扑排序</p>
-      </a>
-
-      <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">拓扑排序算法思想：bfs
-把所有入度为0的点全部放入队列。
-只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。
-把每个入度被减成0的节点放入队列
-
-/* 
-    n 节点个数，下标从1开始
-    graph 邻接表
-    inD 每个节点的入度
-    ans 保存拓扑序
-*/
-bool topsort() {
-    queue&lt;int&gt; q;
-    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列
-        if (inD[i] == 0)
-            q.push(i);
-
-    while (!q.empty()) {
-        int t = q.front(); q.pop();  // 拿一个入度为0的点
-        ans.push_back(t);
-        for (int v : graph[t])  // 把以该点t为入度的点的入度减一
-            if (--inD[v] == 0) 
-         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
-        <p class="h4 index-header">数论</p>
-      </a>
-
-      <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">数论快速幂库函数： res = pow(x, n) 
-// n 不能是INT_MIN, 因为负数转成正数做会溢出，要单独判断
-double pow(double x, int n) {
-    if (n &lt; 0) n = -n, x = 1/x;
-
-    double res = 1, t = x;
-    while (n) {
-        if (n &amp; 1) res *= t;
-        t *= t;
-        n &gt;&gt;= 1;
-    }
-    return res;
-}
-
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-04&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%95%B0%E8%AE%BA">数论</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

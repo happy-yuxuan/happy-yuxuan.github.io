@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.6k 字
+                    1.7k 字
                   </span>&nbsp;
                 
 
@@ -429,6 +429,11 @@ vector&lt;pair&lt;int, int&gt;&gt; a2(mp.begin(), mp.end());  // map -&gt; vecto
 
 unordered_set&lt;char&gt; se(word.begin(), word.end()); //word 为 string
 </code></pre>
+<h2 id="容器元素为pair的时候不要使用引用"><a href="#容器元素为pair的时候不要使用引用" class="headerlink" title="容器元素为pair的时候不要使用引用"></a>容器元素为pair的时候不要使用引用</h2><pre><code class="lang-c++">deque&lt;pair&lt;int, int&gt;&gt; q;
+
+// auto&amp; t = q.front();   // 不要添加引用, 会出现意想不到的错误
+auto t = q.front();
+</code></pre>
 
             <hr>
           </div>
@@ -506,7 +511,7 @@ unordered_set&lt;char&gt; se(word.begin(), word.end()); //word 为 string
       perPage: 15,
       pagerDirection: 'last',
       createIssueManually: 'true',
-      distractionFreeMode: 'false'
+      distractionFreeMode: 'true'
     });
 
     gitalk.render('gitalk-container')
