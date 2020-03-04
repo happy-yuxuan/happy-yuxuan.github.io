@@ -144,6 +144,61 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/04/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/">
+        <p class="h4 index-header">洗牌算法及其验证</p>
+      </a>
+
+      <a href="/2020/03/04/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">洗牌分析洗牌算法正确性的准则：产生的结果必须有 n! 种可能，否则就是错误的。**这个很好解释，因为一个长度为 n 的数组的全排列就有 n! 种，也就是说打乱结果总共有 n! 种。算法必须能够反映这个事实，才是正确的。
+void shuffle(int[] arr) {
+    int n = arr.length();
+    for (int i = 0 ; i &lt; n; i++) {
+        int rand = randInt(i, n - 1);  // 从 i 到最后随机选一个元素
+        swap(arr[i], arr[rand]);
+    }
+}
+
+
+对于每一个位置来说当前都有i+i中选法，即第0个位置有n中可能（0到n-1有n个数），第二个位置有n-1种可能以此类推。最后就有n!种可能。
+
+验证洗牌算法，或者说随机乱置算法的正确性衡量标准是：对于每种可能的结果出现的概率必须相等，也就是说要足够随机。
+
+蒙特卡罗方法近似地估计出概率是否相等
+思想：类似求圆周率打点一样。在正方形纸上画一个直径为正方形边长的圆。随机往上扔石头，然后根据石头落在圆的</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2020/03/04/01BFS%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF/">
         <p class="h4 index-header">01BFS求最短路</p>
       </a>
@@ -676,79 +731,11 @@ Delegate(相互)
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/01/%E8%A7%84%E8%8C%83/">
-        <p class="h4 index-header">一些规范记录</p>
-      </a>
-
-      <a href="/2020/03/01/%E8%A7%84%E8%8C%83/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">规范Xcode工具
-使用 refactor 重命名的时候可以把注释也加上。改完以后有可能会丢失文件报错，需要show in finder 然后查找原文件改名 。
-
-注释最好写出自解释的代码，但一定要加注释的地方（令人迷惑的字符串或者数字等等）。头文件每个类中注释其功能以及其实现的意义（opt + cmd + /）
-
-需要注释地方：： 每个类、 公有方法、 令人迷惑的字符串
-
-编译器指令： #pragma mark  ==  // MARK  
- // MARK: - xxx 
-// FIXME: - xxx
- // TODO:有-x代表一个横. 
-// ???:有疑问 
-// !!!: 要注意
-
-
-文件代码结构
-类自身的初始化一般收敛到类本身
-项目文件夹一般按照业务逻辑进行归类
-私有函数在名字前面加 _ 代表其是私有方法
-
-Extension
-XCFormat
-
-可以安装 &amp; 自定义设置（nl_fdef_brace），团队代码统一
-设置快捷键
-
-
-
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-01&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/iOS">iOS</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

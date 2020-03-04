@@ -144,6 +144,68 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
+        <p class="h4 index-header">拓扑排序</p>
+      </a>
+
+      <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">拓扑排序算法思想：bfs
+把所有入度为0的点全部放入队列。
+只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。
+把每个入度被减成0的节点放入队列
+
+/* 
+    n 节点个数，下标从1开始
+    graph 邻接表
+    inD 每个节点的入度
+    ans 保存拓扑序
+*/
+bool topsort() {
+    queue&lt;int&gt; q;
+    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列
+        if (inD[i] == 0)
+            q.push(i);
+
+    while (!q.empty()) {
+        int t = q.front(); q.pop();  // 拿一个入度为0的点
+        ans.push_back(t);
+        for (int v : graph[t])  // 把以该点t为入度的点的入度减一
+            if (--inD[v] == 0) 
+         </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
         <p class="h4 index-header">数论</p>
       </a>
@@ -198,68 +260,6 @@ double pow(double x, int n) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
-        <p class="h4 index-header">区间合并</p>
-      </a>
-
-      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">区间合并应用合并区间 思路：
-
-先对区间的左端点进行排序。
-
-如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
-
-
-
-新建一个数组保存区间
-
-class Solution {
-public:
-    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
-        vector&lt;vector&lt;int&gt;&gt; ans;
-        if (intervals.size() &lt;= 1) {
-            ans = intervals;
-            return ans;
-        }
-
-        sort(intervals.begin(), intervals.end());
-
-        ans.push_back(intervals[0]);
-        for (int i = 1; i &lt; intervals.si</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/03/%E4%BA%8C%E5%88%86/">
         <p class="h4 index-header">二分</p>
       </a>
@@ -292,65 +292,6 @@ int bsearch_1(int l, int r)
 
 // ! 找性质在左半边的最后一个点 !
 // 区间[l, r]被划分成[l, mid - 1]和[mid, r]时使用： </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
-        <p class="h4 index-header">前缀和 &amp; 差分</p>
-      </a>
-
-      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">前缀和 &amp; 差分前缀和模板一维
-s[i] 表示前i个数[0, i)的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断
-前缀和数组s下标从1开始， 原数组nums下标从0开始
-
-// s[0] = 0
-for (int i = 1; i &lt;= n; i++) {
-    s[i] = s[i-1] + nums[i-1];
-}
-
-// l, r是指原数组下标区间
-// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r
-// s[l]  : [0, l-1]     0, 1, ..., l-1 , 
-// 相减                       [l, r]的和 ：l, ..., r                 
-int l_to_r_sum = s[r+1] - s[l];
-
-二维// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始
-
-// 算前缀和
-for (int i = 1; i &lt;= n; i++) {
-    for (int j = 1; j &lt;</div>
         </div>
       </a>
 
@@ -447,6 +388,68 @@ public:
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        <p class="h4 index-header">区间合并</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">区间合并应用合并区间 思路：
+
+先对区间的左端点进行排序。
+
+如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
+
+
+
+新建一个数组保存区间
+
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        if (intervals.size() &lt;= 1) {
+            ans = intervals;
+            return ans;
+        }
+
+        sort(intervals.begin(), intervals.end());
+
+        ans.push_back(intervals[0]);
+        for (int i = 1; i &lt; intervals.si</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/03/%E5%8F%8C%E6%8C%87%E9%92%88/">
         <p class="h4 index-header">双指针</p>
       </a>
@@ -478,6 +481,65 @@ for (int i = 0; i &lt; n; i++) {
 int j = 0;
 for (int i = 0; i &lt; n; i++) {
   whi</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
+        <p class="h4 index-header">前缀和 &amp; 差分</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">前缀和 &amp; 差分前缀和模板一维
+s[i] 表示前i个数[0, i)的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断
+前缀和数组s下标从1开始， 原数组nums下标从0开始
+
+// s[0] = 0
+for (int i = 1; i &lt;= n; i++) {
+    s[i] = s[i-1] + nums[i-1];
+}
+
+// l, r是指原数组下标区间
+// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r
+// s[l]  : [0, l-1]     0, 1, ..., l-1 , 
+// 相减                       [l, r]的和 ：l, ..., r                 
+int l_to_r_sum = s[r+1] - s[l];
+
+二维// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始
+
+// 算前缀和
+for (int i = 1; i &lt;= n; i++) {
+    for (int j = 1; j &lt;</div>
         </div>
       </a>
 
@@ -694,56 +756,11 @@ int[] a = new int[</div>
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/12/18/STL_Summary/">
-        <p class="h4 index-header">STL Summary</p>
-      </a>
-
-      <a href="/2018/12/18/STL_Summary/">
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">STL &amp; C++刷题技巧...</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-18&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/C++">C++</a>&nbsp;
-          
-            <a href="/categories/STL">STL</a>&nbsp;
-          
-            <a href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

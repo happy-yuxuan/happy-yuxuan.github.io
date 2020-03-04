@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      7 分钟
+                      8 分钟
                   </span>&nbsp;
                 
 
@@ -171,8 +171,7 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="STL-amp-C-刷题技巧"><a href="#STL-amp-C-刷题技巧" class="headerlink" title="STL &amp; C++刷题技巧"></a>STL &amp; C++刷题技巧</h1><a id="more"></a>
-<div class="table-container">
+            <h1 id="STL-amp-C-刷题技巧"><a href="#STL-amp-C-刷题技巧" class="headerlink" title="STL &amp; C++刷题技巧"></a>STL &amp; C++刷题技巧</h1><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -394,27 +393,38 @@ cin.tie(0);
 </ul>
 <h2 id="生成随机数"><a href="#生成随机数" class="headerlink" title="生成随机数"></a>生成随机数</h2><p><code>a &lt;= x &lt;= b</code></p>
 <ul>
-<li>方法一：两者差值不能超过INT_MAX</li>
-</ul>
-<pre><code class="lang-c++">srand(time(0));  // 先设置随机种子
+<li><p>方法一：两者差值不能超过INT_MAX</p>
+<pre><code class="lang-c++">  srand(time(0));  // 先设置随机种子
 
-int randX(int a, int b) {   // a b数的差值不能超过INT_MAX
-    return a + (rand() % (b - a + 1));
+  int randInt(int a, int b) {   // a b数的差值不能超过INT_MAX
+      return a + (rand() % (b - a + 1));
+  }
+
+  // 生成方法
+  int n = randX(1, 100);   // n ∈ [1, 100]
+</code></pre>
+</li>
+<li><p>方法二：int间的任何数</p>
+<pre><code class="lang-c++">  typedef long long ll;
+  int myrand(int mod) { return ((ll)rand()&lt;&lt;32^(ll)rand()&lt;&lt;16^rand())%mod; }
+  #define random(a, b)((a) + myrand((b) - (a) + 1)) // Integer[a,b]
+
+  // 生成方法
+  int n = random(INT_MIN, INT_MAX);  // n ∈ [-2147483648, 2147483647]
+</code></pre>
+</li>
+<li><p>库函数C++11</p>
+<pre><code class="lang-c++">default_random_engine e(time(0));
+
+int randInt(int a, int b) {
+    return a + (e() % (b - a + 1));
 }
 
 // 生成方法
 int n = randX(1, 100);   // n ∈ [1, 100]
 </code></pre>
-<ul>
-<li>方法二：int间的任何数</li>
+</li>
 </ul>
-<pre><code class="lang-c++">typedef long long ll;
-int myrand(int mod) { return ((ll)rand()&lt;&lt;32^(ll)rand()&lt;&lt;16^rand())%mod; }
-#define random(a, b)((a) + myrand((b) - (a) + 1)) // Integer[a,b]
-
-// 生成方法
-int n = random(INT_MIN, INT_MAX);  // n ∈ [-2147483648, 2147483647]
-</code></pre>
 <h2 id="通过迭代器来初始化容器-hash表-lt-—-gt-vector"><a href="#通过迭代器来初始化容器-hash表-lt-—-gt-vector" class="headerlink" title="通过迭代器来初始化容器 hash表 &lt; — &gt; vector"></a>通过迭代器来初始化容器 hash表 &lt; — &gt; vector</h2><ul>
 <li>set(map) &lt;-&gt; vector &lt;-&gt; string</li>
 <li>总之有迭代器的都可以。 stack 和 queue没有</li>
@@ -450,10 +460,10 @@ auto t = q.front();
                   <a class="hover-with-bg" href="/categories/C++">C++</a>
                   &nbsp;
                 
-                  <a class="hover-with-bg" href="/categories/STL">STL</a>
+                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
                   &nbsp;
                 
-                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
+                  <a class="hover-with-bg" href="/categories/STL">STL</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
