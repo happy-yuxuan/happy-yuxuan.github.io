@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>Java快速读写模板 ~ Victor&#39;s blog</title>
+  <title>背包问题总结 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -121,7 +121,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期三, 二月 19日 2020, 10:01 晚上
+                  星期三, 三月 4日 2020, 10:20 上午
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    591 字
+                    1.4k 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      3 分钟
+                      6 分钟
                   </span>&nbsp;
                 
 
@@ -171,227 +171,137 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h2 id="刷题快速读写做题模板1"><a href="#刷题快速读写做题模板1" class="headerlink" title="刷题快速读写做题模板1"></a>刷题快速读写做题模板1</h2><pre><code class="lang-java">import java.io.OutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.io.BufferedReader;
+            <h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><ul>
+<li>v为体积， w为价值 <code>v, w &gt; 0</code></li>
+</ul>
+<h2 id="0-1背包"><a href="#0-1背包" class="headerlink" title="0-1背包"></a>0-1背包</h2><pre><code>dp(i, j) 表示选前i件物品到背包容量为j的最大价值
+</code></pre><pre><code>dp(i, j) = max(dp(i-1, j), dp(i-1, j-v[i]) + w[i])
+</code></pre><ul>
+<li><p>转移方程解释：选前i件物体的背包容量为j的最大价值由两个状态转移过来： case1： 不选第i件物品，只在前i-1件物品中选最大价值； case2：选第i件物品，那前i-1件物品中只能选j-v[i]容量的价值。</p>
+</li>
+<li><p>base case：<code>dp(0, 0) = 0</code>选前0件物品到容量为j的最大价值为0</p>
+</li>
+<li>对于每个阶段i，求出对应背包容量[0, V]的最大价值</li>
+</ul>
+<h4 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h4><pre><code class="lang-c++">// 返回选择前i件物品在背包为j容量的最大价值
+int dfs(int i, int j) {
+    if (i == 0) return 0;
 
-public class Main {
-    static class InputReader {
-        public BufferedReader reader;
-        public StringTokenizer tokenizer;
+    int res = dfs(i - 1, j);
+    if (j &gt;= v[i]) res = max(res, dfs(i - 1, j - v[i]) + w[i]);
 
-        public InputReader(InputStream stream) {
-            reader = new BufferedReader(new InputStreamReader(stream), 32768);
-            tokenizer = null;
-        }
+    return res;
+}
+</code></pre>
+<h4 id="记忆化搜索"><a href="#记忆化搜索" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h4><pre><code class="lang-c++">// 返回选择前i件物品在背包为j容量的最大价值
+// memo 为 (n + 1) * (V + 1)的矩阵，初试值为-1
+int dfs(int i, int j, vector&lt;vector&lt;int&gt;&gt;&amp; memo) { 
+    if (i == 0) return 0;
 
-        public String nextLine() {
-            while(tokenizer == null || !tokenizer.hasMoreElements()){
-                try {
-                    tokenizer =new StringTokenizer(reader.readLine());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return tokenizer.nextToken(&quot;\n&quot;);
-        }
+    if (memo[i-1][j] == -1) memo[i-1][j] = dfs(i - 1, j, memo);
+    if (j &gt;= v[i] &amp;&amp; memo[i-1][j-v[i]] == -1) memo[i-1][j-v[i]] = dfs(i - 1, j - v[i], memo);
 
-        public String next() {
-            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
-                try {
-                    tokenizer = new StringTokenizer(reader.readLine());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return tokenizer.nextToken();
-        }
+    memo[i][j] = memo[i-1][j];
+    if (j &gt;= v[i]) memo[i][j] = max(memo[i][j], memo[i-1][j-v[i]] + w[i]);
 
-        public int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        public long nextLong() {
-            return Long.parseLong(next());
-        }
-
+    return memo[i][j];
+}
+</code></pre>
+<h4 id="DP-自底向上"><a href="#DP-自底向上" class="headerlink" title="DP - 自底向上"></a>DP - 自底向上</h4><pre><code class="lang-c++">dp[0][0] = 0;
+for (int i = 1; i &lt;= n; i++) {
+    for (int j = 0; j &lt;= V; j++) {
+        dp[i][j] = dp[i-1][j];
+        if (j &gt;= v[i]) dp[i][j] = max(dp[i][j], dp[i-1][j-v[i]] + w[i]);
     }
-    public static void main(String[] args) {
-        InputStream inputStream = System.in;
-        OutputStream outputStream = System.out;
-        InputReader in = new InputReader(inputStream);
-        PrintWriter out = new PrintWriter(outputStream);
-        Solver solver = new Solver();
-        int T = 1;
-        // int T = in.nextInt();
-        for (int i = 1; i &lt;= T; i++) solver.start(T, in, out);
-        out.close();
+}
+</code></pre>
+<ul>
+<li>滚动数组把所有阶段都 <code>&amp; 1</code>就行</li>
+</ul>
+<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><pre><code>dp(i, j) 表示选前i件物品到背包容量为j的最大价值
+</code></pre><pre><code>dp(i, j) = max(dp(i-1, j-k*v[i])+k*w[i]), k∈[0, j/v[i]]
+</code></pre><ul>
+<li>转移方程解释：选前i件物体的背包容量为j的最大价值由k个状态转移过来：选了k个i物品，只要背包能装得下<code>j - k*v[i]&gt;= 0</code>装，所有选法的最大值</li>
+<li><code>dp(0, 0) = 0</code>选前0件物品到容量为j的最大价值为0</li>
+</ul>
+<h4 id="暴力-1"><a href="#暴力-1" class="headerlink" title="暴力"></a>暴力</h4><pre><code class="lang-c++">// 选择前i个物品到背包容量为j的最大价值
+int dfs(int i, int j) {
+    if (i == 0) return 0;
+
+    int res = 0;
+    for (int k = 0; k * v[i] &lt;= j; j++) {
+        res = max(res, dfs(i - 1, j - k * v[i]) + k * w[i]);
     }
 
-    static class Solver {
-        public void start(int testNumber, InputReader in, PrintWriter out) {
+    return res;
+}
+</code></pre>
+<h4 id="记忆化搜索-1"><a href="#记忆化搜索-1" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h4><pre><code class="lang-c++">// 选择前i个物品到背包容量为j的最大价值
+int dfs(int i, int j, vector&lt;vector&lt;int&gt;&gt;&amp; memo) {
+    if (i == 0) return 0;
 
+    memo[i][j] = 0;
+    for (int k = 0; k * v[i] &lt;= j; k++) {
+        if (memo[i-1][j-k*v[i]] == -1) memo[i-1][j-k*v[i]] = dfs(i - 1, j - k * v[i], memo);
+        memo[i][j] = max(memo[i][j], memo[i-1][j-k*v[i]] + k*w[i]);
+    }
+
+    return memo[i][j];
+}
+</code></pre>
+<h4 id="DP-自底向上-1"><a href="#DP-自底向上-1" class="headerlink" title="DP - 自底向上"></a>DP - 自底向上</h4><pre><code class="lang-c++">for (int i = 1; i &lt;= n; i++) {
+    for (int j = 0; j &lt;= V; j++) {
+        for (int k = 0; k * v[i] &lt;= j; k++) {
+            dp[i][j] = max(dp[i][j], dp[i-1][j-k*v[i]] + k*w[i]);
         }
     }
 }
 </code></pre>
-<h2 id="刷题快速读写做题模板2"><a href="#刷题快速读写做题模板2" class="headerlink" title="刷题快速读写做题模板2"></a>刷题快速读写做题模板2</h2><pre><code class="lang-java">import java.io.*;
-import java.util.InputMismatchException;
-
-public class Main {
-
-    static class Solver {
-        public void doing(int testNumber, InputReader in, OutputWriter out) {
-
+<h3 id="状态优化技巧"><a href="#状态优化技巧" class="headerlink" title="状态优化技巧"></a>状态优化技巧</h3><ul>
+<li>状态转移化简，为方便些公式 <code>v[i], w[i]</code> 简写成<code>v, w</code></li>
+</ul>
+<pre><code>① dp(i, j) = max(dp(i-1, j),dp(i-1, j-v)+w, dp(i-1,j-2v)+2w, ..., dp(i-1,j-kv)+kw)
+</code></pre><pre><code>② dp(i,j-v) = max(          dp(i-1, j-v),   dp(i-1,j-2v)+w, ...,  dp(i-1,j-kv)+(k-1)w)
+</code></pre><p><strong>联立①②：</strong></p>
+<pre><code>dp(i, j) = max( dp(i-1,j), dp(i,j-v)+w )
+</code></pre><p>PS: 跟0-1背包状态<strong>dp(i, j) = max(dp(i-1, j), dp(<code>i-1</code>, j-v[i]) + w[i])</strong> 只相差<code>i-1</code>部分, 更改0-1背包代码i-1变成i就行就行</p>
+<h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><pre><code>dp(i, j) 表示选前i件物品到背包容量为j的最大价值
+</code></pre><pre><code>dp(i, j) = max( dp(i-1, j-k*v[i])+k*w[i] ), k∈[0, min(s[i], j / v[i])]
+</code></pre><ul>
+<li>转移方程解释：<code>s[i]</code>为物品的个数，选前i件物体的背包容量为j的最大价值由k个状态转移过来：选了k个i物品，只要选[0,s[i]]个当前物体<code>k &lt;= s[i]</code>并且背包能装得下<code>j - k*v[i]&gt;= 0</code>，所有选法的最大值</li>
+<li><p><code>dp(0, 0) = 0</code>选前0件物品到容量为j的最大价值为0</p>
+</li>
+<li><p>比只朴素版的完全背包的k多了一个限制条件<code>k &lt;= s[i]</code></p>
+</li>
+</ul>
+<h4 id="DP-自底向上-2"><a href="#DP-自底向上-2" class="headerlink" title="DP - 自底向上"></a>DP - 自底向上</h4><pre><code class="lang-c++">for (int i = 1; i &lt;= n; i++) {
+    for (int j = 0; j &lt;= V; j++) {
+        for (int k = 0; k * v[i] &lt;= j &amp;&amp; k &lt;= s[i]; k++) {
+            dp[i][j] = max(dp[i][j], dp[i-1][j-k*v[i]] + k*w[i]);
         }
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-//        FileInputStream fis = new FileInputStream(&quot;out/production/interview/in.txt&quot;);
-//        System.setIn(fis);
-        InputReader in = new InputReader(System.in);
-        OutputWriter out = new OutputWriter(System.out);
-        Solver solver = new Solver();
-//        int testCount = Integer.parseInt(in.next());    // many case
-        int testCount = 1;    // one case
-        for (int i = 1; i &lt;= testCount; i++) solver.doing(i, in, out);
-        out.close();
-    }
-
-    // ----- IO -----
-    static class InputReader {
-        private InputStream stream;
-        private byte[] buf = new byte[1 &lt;&lt; 16];
-        private int curChar;
-        private int numChars;
-
-        public InputReader(InputStream stream) {
-            this.stream = stream;
-        }
-
-        public int read() {
-            if (this.numChars == -1) {
-                throw new InputMismatchException();
-            } else {
-                if (this.curChar &gt;= this.numChars) {
-                    this.curChar = 0;
-
-                    try {
-                        this.numChars = this.stream.read(this.buf);
-                    } catch (IOException var2) {
-                        throw new InputMismatchException();
-                    }
-
-                    if (this.numChars &lt;= 0) {
-                        return -1;
-                    }
-                }
-
-                return this.buf[this.curChar++];
-            }
-        }
-
-        public int nextInt() {
-            int c;
-            for (c = this.read(); isSpaceChar(c); c = this.read()) {
-                ;
-            }
-
-            byte sgn = 1;
-            if (c == 45) {
-                sgn = -1;
-                c = this.read();
-            }
-
-            int res = 0;
-
-            while (c &gt;= 48 &amp;&amp; c &lt;= 57) {
-                res *= 10;
-                res += c - 48;
-                c = this.read();
-                if (isSpaceChar(c)) {
-                    return res * sgn;
-                }
-            }
-
-            throw new InputMismatchException();
-        }
-
-        public String next() {
-            int c;
-            while (isSpaceChar(c = this.read())) {
-                ;
-            }
-
-            StringBuilder result = new StringBuilder();
-            result.appendCodePoint(c);
-
-            while (!isSpaceChar(c = this.read())) {
-                result.appendCodePoint(c);
-            }
-
-            return result.toString();
-        }
-
-//        long nextLong()
-//        {
-//            return Long.parseLong(next());
-//        }
-//        double nextDouble()
-//        {
-//            return Double.parseDouble(next());
-//        }
-//        BigInteger nextBigInteger()
-//        {
-//            return new BigInteger(next());
-//        }
-//        BigDecimal nextBigDecimal()
-//        {
-//            return new BigDecimal(next());
-//        }
-
-        public static boolean isSpaceChar(int c) {
-            return c == 32 || c == 10 || c == 13 || c == 9 || c == -1;
-        }
-
-    }
-    static class OutputWriter {
-        private final PrintWriter writer;
-
-        public OutputWriter(OutputStream outputStream) {
-            writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-        }
-
-        public OutputWriter(Writer writer) {
-            this.writer = new PrintWriter(writer);
-        }
-
-        public void printf(String format, Object... objects) {
-            writer.printf(format, objects);
-        }
-
-        public void close() {
-            writer.close();
-        }
-
     }
 }
 </code></pre>
-<p><code>Integer.parseInt(in.next())</code></p>
-<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><p>将System.out的输入（出）重定向到文件输入（出）</p>
-<pre><code class="lang-java">// 输入
-FileInputStream fis = new FileInputStream(&quot;out/production/interview/in.txt&quot;);
-System.setIn(fis);
-
-// 输出
-PrintStream ps = new PrintStream(new FileOutputStream(&quot;output.txt&quot;));
-System.setOut(ps);
-
-Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+<h3 id="状态优化"><a href="#状态优化" class="headerlink" title="状态优化"></a>状态优化</h3><ul>
+<li>二进制优化待定</li>
+</ul>
+<h2 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h2><pre><code>dp(i, j) 表示选前i组物品到背包容量为j的最大价值
+</code></pre><pre><code>dp(i, j) = max(dp(i-1, j), dp(i-1, j-v(i,k)+w(i,k))
+</code></pre><ul>
+<li>转移方程解释：v(i, k)，w(i, k)分别代表第i组第k个物品的体积和价值。选前i组物体的背包容量为j的最大价值由k个状态转移过来：不选当前第i组的物品；选第k个第i组的任意一个物品。前提背包能装下<code>j-v(i,k) &gt;= 0</code></li>
+<li><code>dp(0, 0) = 0</code>选前0件物品到容量为j的最大价值为0</li>
+</ul>
+<h4 id="DP-自底向上-3"><a href="#DP-自底向上-3" class="headerlink" title="DP - 自底向上"></a>DP - 自底向上</h4><pre><code class="lang-c++">// vector&lt;vector&lt;PII&gt;&gt; group;   group[i][k] 代表第i组的第k个物品的信息
+for (int i = 1; i &lt;= n; i++) {
+    for (int j = 0; j &lt;= V; j++) {
+        dp[i][j] = dp[i-1][j];
+        for (int k = 0; k &lt; group[i].size(); k++) {
+            int v = group[i][k].first, w = group[i][k].second;
+            if (j - v &lt; 0) continue;
+            dp[i][j] = max(dp[i][j], dp[i-1][j-v] + w);
+        }
+    }
+}
 </code></pre>
 
             <hr>
@@ -406,13 +316,7 @@ Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
                   <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95">算法</a>
                   &nbsp;
                 
-                  <a class="hover-with-bg" href="/categories/Java">Java</a>
-                  &nbsp;
-                
-                  <a class="hover-with-bg" href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>
-                  &nbsp;
-                
-                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
+                  <a class="hover-with-bg" href="/categories/DP">DP</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -578,7 +482,7 @@ Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Java快速读写模板&nbsp;",
+        "背包问题总结&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

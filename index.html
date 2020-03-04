@@ -144,6 +144,300 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/04/01BFS%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF/">
+        <p class="h4 index-header">01BFS求最短路</p>
+      </a>
+
+      <a href="/2020/03/04/01BFS%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">01BFS求最短路结论
+在我以前的理解：当图的所有边权都是1的时候，求一个点到每个点的最短路径就是bfs所经过的点。因为边权是1所以每一层一定是最先到达的点。边权是非负数的时候，最短路就可以使用常见的最短路算法Dijkstra；有负数边的话SPFA等。
+
+但是若边权只有0和1的时候，可以使用01BFS，但是要使用双端队列。扩展某个节点的时候，若边权是0则加入队首，边权是1则加入队尾。这样就可以满足每次扩展的永远是最短的（0在队首可以保证）
+
+
+178周赛第四题收货：01BFS求最短路
+问题可以抽象成构建一个图，每一个方向都可以向其四个方向建边，若需要改变方向则边权是1，若不需要改变方向边权是0。然后找(0, 0)点到(n-1, m-1)的最短路。
+代码以这道题为例，因为边权是0或1可以使用01BFS求最短路
+每次扩展四个边的时候，边权为0加入队首，边权为1加入队尾
+代码：
+// 32ms &amp; 18.3MB
+class Solution {
+public:
+    int minCost(vector&lt;vector&lt;int&gt;&gt;&amp; grid) {
+ </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%91%A8%E8%B5%9B%E6%94%B6%E8%B4%A7">周赛收货</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/04/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
+        <p class="h4 index-header">背包问题总结</p>
+      </a>
+
+      <a href="/2020/03/04/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">背包问题
+v为体积， w为价值 v, w &gt; 0
+
+0-1背包dp(i, j) 表示选前i件物品到背包容量为j的最大价值
+dp(i, j) = max(dp(i-1, j), dp(i-1, j-v[i]) + w[i])
+
+转移方程解释：选前i件物体的背包容量为j的最大价值由两个状态转移过来： case1： 不选第i件物品，只在前i-1件物品中选最大价值； case2：选第i件物品，那前i-1件物品中只能选j-v[i]容量的价值。
+
+base case：dp(0, 0) = 0选前0件物品到容量为j的最大价值为0
+
+对于每个阶段i，求出对应背包容量[0, V]的最大价值
+
+暴力// 返回选择前i件物品在背包为j容量的最大价值
+int dfs(int i, int j) {
+    if (i == 0) return 0;
+
+    int res = dfs(i - 1, j);
+    if (j &gt;= v[i]) res = max(res, dfs(i - 1, j - v[i]) + w[i]);
+
+    return res;
+}
+
+记忆化搜索// 返回选择</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/DP">DP</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/04/DP%E5%B8%B8%E8%A7%81%E7%A7%8D%E7%B1%BB/">
+        <p class="h4 index-header">DP常见种类</p>
+      </a>
+
+      <a href="/2020/03/04/DP%E5%B8%B8%E8%A7%81%E7%A7%8D%E7%B1%BB/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">DP常见种类
+对于dp数组下标什么时候从1开始, 假如状态中有 i-1转移过来的就最好从1开始. 这样可以给dp[0]初值, 设置边界, 少一些判断
+一般解决 最值, 计数, 存在性
+时间复杂度: 状态数  转移代价   (定义状态的个数  每个状态计算的代价)
+
+术语 &amp; 满足性质术语
+动态规划：运筹学中的一个分支，是求解决策过程最优化的数学方法。
+阶段：把所给求解问题的过程恰当地分成若干个相互联系的阶段。
+状态：状态表示每个阶段开始面临的自然状况或客观条件。
+决策（转移）：一个阶段的状态给定以后，从该状态演变到下一阶段某个状态的一种选择称为决策。
+策略：每阶段都做一个决策，一系列决策的集合。
+边界：初始集合。
+
+满足性质
+最优子结构：一个最优化策略的子策略总是最优的，反过来，我们可以通过最优的子策略，推出最优策略。
+无后效性：当我们通过一系列策略到达了某一阶段的某一状态时，下一步决策不受之前的一系列策略影响，仅由当前状态决定。
+子问题重叠：算法计算的过程中会反复地求解相同的一定量的子问题，而不是不断生成没有见过的新问题。也就是说子问题空间不大，或是状态空间不大，我们可以通过</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/DP">DP</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/04/%E6%9C%80%E7%9F%AD%E8%B7%AF/">
+        <p class="h4 index-header">最短路</p>
+      </a>
+
+      <a href="/2020/03/04/%E6%9C%80%E7%9F%AD%E8%B7%AF/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+Dijkstra（堆优化版子）T: O(mlogn)  S: O(n + m)
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+vector&lt;vector&lt;PII&gt;&gt; g;
+
+// 求 u 到 任何一点 的最短路
+int dijkstra(int u) {
+    vector&lt;int&gt; dist(n + 1, INT_MAX);
+    vector&lt;bool&gt; used(n + 1, false);
+    // vector&lt;int&gt; prev(n + 1, -1);   初试话为-1
+    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; q;
+    q.push({0, u});
+    while (!q.empty()) {
+        PII t = q.top(); q.po</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/04/App%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD_%E6%95%B0%E6%8D%AE%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%AD%98%E5%82%A8/">
+        <p class="h4 index-header">iOS数据的序列化与存储</p>
+      </a>
+
+      <a href="/2020/03/04/App%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD_%E6%95%B0%E6%8D%AE%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%AD%98%E5%82%A8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">JSON解析NSJSONSerialization(系统最底层)
+
+系统最基础的库： NSJSONSerialization 提供JSON数据和系统对象之间的转换（可以相互转换）
+
+// 把收到NSData转成Dictionary的对象
+NSError *jsonError;
+// change to NSdata to Dictionary
+id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&amp;jsonError];
+
+开源的解析库
+用一个Model来代表Dictionary汇总的数据（Bean）
+JSON Model开源项目： YYModel / Mantle / MJExtension
+
+简化NSData - JSON - Model流程
+
+避免类型转换错误 / 属性和对象不一致
+相互转换
+
+建议使用开源的项目直接把Dictionary变成一个Model，但是在objectForKey的时候也是需要异常检测的，防止拿不到数据。
+JSON:
+{
+   &quot;uid&quot</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          
+            <a href="/categories/%E5%AD%98%E5%82%A8">存储</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2020/03/03/%E7%BD%91%E7%BB%9C%E5%8A%9F%E8%83%BD/">
         <p class="h4 index-header">iOS网络功能基础总结</p>
       </a>
@@ -438,302 +732,6 @@ XCFormat
             <a href="/categories/iOS">iOS</a>&nbsp;
           
             <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/01/Xcode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">
-        <p class="h4 index-header">Xcode常用快捷键</p>
-      </a>
-
-      <a href="/2020/03/01/Xcode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">个人常用快捷键注释cmd + option + /
-格式化代码自己安装了XCFormatcontrol + cmd + 1
-按名字查找文件shift + cmd + o
-正在打开的界面立刻在 Navigation中找到shift + cmd + j
-切换.h和.m文件control + cmd + ↑ 或 control + cmd + ↓
-回退(前进)到上个光标control + cmd + ←  control + cmd + →
-折叠(展开)代码块opt + cmd + ← opt + cmd + →
-查找当前文件cmd + f
-技巧当一个对象不会被使用的时候在前面声名关键字__unused
-Debug时候打印对象属性打断点，在控制台 po 对象.属性
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-01&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/iOS">iOS</a>&nbsp;
-          
-            <a href="/categories/Xcode">Xcode</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/02/29/C-%E4%B9%8Bthis%E6%8C%87%E9%92%88/">
-        <p class="h4 index-header">C++之this指针</p>
-      </a>
-
-      <a href="/2020/02/29/C-%E4%B9%8Bthis%E6%8C%87%E9%92%88/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">this pointer(指针) in C++
-每一个类的对象来说，成员属性是在每个对象是一个是副本。
-而对于每个对象是共享一个类的成员函数。（this是解决区分谁调用了这个成员函数）
-
-通俗来说，this指针是用来区分哪一个对象。this指针作为隐藏参数传递给所有非静态成员变量函数调用，而且可以用作所有非静态函数体内部的局部变量。
-静态函数是不能访问有this指针的，他是属于类的。
-作用1初始化对象的成员变量(本地变量与成员变量重名的时候，当然不重名的时候也可以使用)
-#include&lt;iostream&gt; 
-using namespace std; 
-
-/* local variable is same as a member&#39;s name */
-class Test 
-{ 
-private: 
-   int x; 
-public: 
-   void setX (int x) 
-   { 
-       // The &#39;this&#39; pointer is used to retrieve the object&#39;s x 
-       // h</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-29&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/C++">C++</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/02/19/Java%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%86%99%E6%A8%A1%E6%9D%BF/">
-        <p class="h4 index-header">Java快速读写模板</p>
-      </a>
-
-      <a href="/2020/02/19/Java%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%86%99%E6%A8%A1%E6%9D%BF/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">刷题快速读写做题模板1import java.io.OutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.io.BufferedReader;
-
-public class Main {
-    static class InputReader {
-        public BufferedReader reader;
-        public StringTokenizer tokenizer;
-
-        public InputReader(InputStream stream) {
-            reader = new BufferedReader(new InputStreamReader(stream), 32768);
-            toke</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-19&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java">Java</a>&nbsp;
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>&nbsp;
-          
-            <a href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/05/13/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-        <p class="h4 index-header">并查集</p>
-      </a>
-
-      <a href="/2019/05/13/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">并查集算法实现总结朴素版并查集
-询问两个元素是否在同一个集合
-有多少个集合
-
-int p[N];    // 下标i为节点编号，p[i]表示该节点的祖宗节点是谁(父辈中任意的一个)
-
-// 初始化
-void initUF() {
-    for (int i = 0; i &lt; n; i++) {
-        p[i] = i;    // 每个节点的祖宗都是自己，自己单独成为一个集合
-    }
-}
-
-// 查：  查找元素所在集合 --- 找到自己最老的祖宗，即根祖宗
-int findR(int x) {
-    if (x != p[x]) {
-        p[x] = findR(p[x]);
-    }
-    return p[x];
-}
-
-// 查 简化写法
-int findR(int x) {
-    return p[x] == x ? x : p[x] = findR(p[x]);
-}
-
-// 并：   合并两个节点所在集合
-void Union(int a, int b) {
-    int ra = findR(a);
-    int rb = fi</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-05-13&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/05/12/%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA/">
-        <p class="h4 index-header">图的构建</p>
-      </a>
-
-      <a href="/2019/05/12/%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">树 &amp; 图
-树是特殊的图， 无向图是特殊的有向图，所以只需要研究有向图的即可
-
-邻接矩阵(稠密图使用， N^2 跟M是一个规模的时候才使用)优点： 找任意两点是否连通块， 可以多存一维的信息，如g[i][j]可以代表权重  
-构建int g[N][N];    // LeetCode 这样给出 vector&lt;vector&lt;int&gt;&gt; edge
-
-// g[a][b] 存储边a-&gt;b
-void add(int a, int b) {
-    g[a][b] = 1;
-    // g[b][a] = 1;
-}
-
-
-处理自环和重边， 只需要保留最小的一条边就可以了
-
-Dijkstra朴素版本朴素算法: 适合使用邻接矩阵，在边数特别多的时候才使用邻接矩阵的朴素版本时间复杂度为 O( N^2 )  因为n比较小所以使用
-思路：
-
-把出发点u设置成0 dist[u] = 0， 其余点都设置成为 正无穷
-迭代n次(n为节点个数) 将没有确定的点里出发点u最近的点找出来，设为t；
-t加入确定的点中
-用t更新 跟t连接的点的距离(从出发点到该点， 还是t作为中介点</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-05-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
           &nbsp;
         
         

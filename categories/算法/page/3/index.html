@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>标签 ~ Victor&#39;s blog</title>
+  <title>分类 - 算法 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -135,9 +135,41 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center tagcloud">
-  <a href="/tags/%E5%91%A8%E8%B5%9B%E6%94%B6%E8%B4%A7/" style="font-size: 15px; color: #bbe">周赛收货</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 30px; color: #337ab7">编程</a>
+<div class="list-group">
+<!--  <p class="h4">共计 2 篇文章</p>-->
+  <hr>
+  
+    
+      
+      <p class="h5">2018</p>
+    
+    <a href="/2018/12/19/Java%E9%9B%86%E5%90%88%E7%B1%BB%E6%80%BB%E7%BB%93/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Java集合类总结</span>
+      <span style="float: right;">12-19</span>
+    </a>
+  
+    
+    <a href="/2018/12/18/STL_Summary/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">STL Summary</span>
+      <span style="float: right;">12-18</span>
+    </a>
+  
 </div>
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/categories/%E7%AE%97%E6%B3%95/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/categories/%E7%AE%97%E6%B3%95/">1</a><a class="page-number" href="/categories/%E7%AE%97%E6%B3%95/page/2/">2</a><span class="page-number current">3</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
               </div>
             </div>
           </div>
@@ -235,7 +267,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签&nbsp;",
+        "分类 - 算法&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

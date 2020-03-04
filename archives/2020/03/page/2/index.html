@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>标签 ~ Victor&#39;s blog</title>
+  <title>归档 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -135,9 +135,34 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center tagcloud">
-  <a href="/tags/%E5%91%A8%E8%B5%9B%E6%94%B6%E8%B4%A7/" style="font-size: 15px; color: #bbe">周赛收货</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 30px; color: #337ab7">编程</a>
+<div class="list-group">
+  <p class="h4">共计 30 篇文章</p>
+  <hr>
+  
+    
+      
+      <p class="h5">2020</p>
+    
+    <a href="/2020/03/01/Xcode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Xcode常用快捷键</span>
+      <span style="float: right;">03-01</span>
+    </a>
+  
 </div>
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/archives/2020/03/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/2020/03/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
               </div>
             </div>
           </div>
@@ -235,7 +260,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签&nbsp;",
+        "归档&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

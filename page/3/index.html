@@ -144,6 +144,309 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
+        <p class="h4 index-header">数论</p>
+      </a>
+
+      <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">数论快速幂库函数： res = pow(x, n) 
+// n 不能是INT_MIN, 因为负数转成正数做会溢出，要单独判断
+double pow(double x, int n) {
+    if (n &lt; 0) n = -n, x = 1/x;
+
+    double res = 1, t = x;
+    while (n) {
+        if (n &amp; 1) res *= t;
+        t *= t;
+        n &gt;&gt;= 1;
+    }
+    return res;
+}
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E8%AE%BA">数论</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        <p class="h4 index-header">区间合并</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">区间合并应用合并区间 思路：
+
+先对区间的左端点进行排序。
+
+如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
+
+
+
+新建一个数组保存区间
+
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        if (intervals.size() &lt;= 1) {
+            ans = intervals;
+            return ans;
+        }
+
+        sort(intervals.begin(), intervals.end());
+
+        ans.push_back(intervals[0]);
+        for (int i = 1; i &lt; intervals.si</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E4%BA%8C%E5%88%86/">
+        <p class="h4 index-header">二分</p>
+      </a>
+
+      <a href="/2019/02/03/%E4%BA%8C%E5%88%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">整数二分模板
+主要看枚举哪一个点，根据这个点的性质到底使用哪个模板(右边的第一个点, 或左边的最后一个点)
+二分的本质是左边满足一个性质，右边满足一个性质，就可以二分
+看到是l = mid就要向上取整，即l + r + 1 &gt;&gt; 1
+
+bool check(int x) {/* ... */} // 检查x是否满足某种性质
+
+// ! 找性质在右半边的第一个点 !
+// 区间[l, r]被划分成[l, mid]和[mid + 1, r]时使用：(向下取整) 
+int bsearch_1(int l, int r)
+{
+    while (l &lt; r)
+    {
+        int mid = l + r &gt;&gt; 1;
+        if (check(mid)) r = mid;    // check()判断mid是否满足性质
+        else l = mid + 1;
+    }
+    return l;
+}
+
+// ! 找性质在左半边的最后一个点 !
+// 区间[l, r]被划分成[l, mid - 1]和[mid, r]时使用： </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
+        <p class="h4 index-header">前缀和 &amp; 差分</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">前缀和 &amp; 差分前缀和模板一维
+s[i] 表示前i个数[0, i)的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断
+前缀和数组s下标从1开始， 原数组nums下标从0开始
+
+// s[0] = 0
+for (int i = 1; i &lt;= n; i++) {
+    s[i] = s[i-1] + nums[i-1];
+}
+
+// l, r是指原数组下标区间
+// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r
+// s[l]  : [0, l-1]     0, 1, ..., l-1 , 
+// 相减                       [l, r]的和 ：l, ..., r                 
+int l_to_r_sum = s[r+1] - s[l];
+
+二维// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始
+
+// 算前缀和
+for (int i = 1; i &lt;= n; i++) {
+    for (int j = 1; j &lt;</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+        <p class="h4 index-header">位运算</p>
+      </a>
+
+      <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">位运算1 &lt;&lt; n 2的n次方
+模板// 求n的第k位数字: 
+n &gt;&gt; k &amp; 1
+
+// 返回n的最后一位1：（就是n的二进制表示最后一个1出现的位置是1， 其余位置都是0）
+int lowbit(int n) {
+    return n &amp; -n;
+}
+
+经典例题位1的个数
+让n减lowbit操作的数（每次减掉了最末尾的1）， 减了多少次到0， 就是多少个1.
+
+class Solution {
+public:
+    uint32_t lowbit(uint32_t n) {
+        return n &amp; -n;
+    }
+
+    int hammingWeight(uint32_t n) {
+        int ans = 0;
+        for (uint32_t i = n; i != 0; i -= lowbit(i)) {
+            ans++;
+        }
+        return ans;
+    }
+};
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/03/%E5%8F%8C%E6%8C%87%E9%92%88/">
         <p class="h4 index-header">双指针</p>
       </a>
@@ -204,35 +507,24 @@ for (int i = 0; i &lt; n; i++) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-        <p class="h4 index-header">归并排序</p>
+      <a href="/2019/02/01/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
+        <p class="h4 index-header">快速排序</p>
       </a>
 
-      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+      <a href="/2019/02/01/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">归并排序算法归并排序均摊时间：O(nlogn) &amp; 空间：O(n)
-// const int N = 100010;
-// int t[N];
-void merge(int a[], int l, int mid, int r) {
-    int cnt = 0;  // 新数组t的长度
-    int i = l, j = mid + 1;
-    while (i &lt;= mid &amp;&amp; j &lt;= r) {
-        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];
-    }
-    while (i &lt;= mid) t[cnt++] = a[i++];
-    while (j &lt;= r) t[cnt++] = a[j++];
+          <div class="index-text mb-1">快速排序算法快速排序均摊时间：O(nlogn) &amp; 空间：O(logn)
 
-    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];
-}
+在数组选一个数v(选中间的)，把数组左边变成&lt;=v，右边变成&gt;=v,使用分治的思想，分别对左边和右边进行快速排序
+理论上最优的策略是以他的中位数来做为划分依据, 让其划分得均匀
 
-void merge_sort(int a[], int l, int r) {
-    if (l &gt;= r) return;
-
-    in</div>
+注意：partition返回的是j，而不是i。
+解释：partition 返回j的原因：partition假如以中点向下取整(l + r &gt;&gt; 1), 只剩下两个数的时候(如 1 2) 就会以左边的1为基准值x，i 和 j 最后会cross over，因为是do while循环， i会到2的位置， j会到1的位置。 这样左边(l, j)是小于等于1， 右边(i, r)是大于等于1.这样不会死循环。若返回i就会发生划分的左边死循环，一直是(1, 2)划分，无限递归下去。
+若要返回i， 跟二分很像，则需要以中点向上取整(l + r + 1 &gt;&gt; 1)。 同理，还是以数组剩下两个元素（1， 2）为例， 基准值x取2. 当i, j cross over之后， 左边小于等于2为(l, i - 1), </div>
         </div>
       </a>
 
@@ -262,24 +554,35 @@ void merge_sort(int a[], int l, int r) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/01/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
-        <p class="h4 index-header">快速排序</p>
+      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+        <p class="h4 index-header">归并排序</p>
       </a>
 
-      <a href="/2019/02/01/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
+      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">快速排序算法快速排序均摊时间：O(nlogn) &amp; 空间：O(logn)
+          <div class="index-text mb-1">归并排序算法归并排序均摊时间：O(nlogn) &amp; 空间：O(n)
+// const int N = 100010;
+// int t[N];
+void merge(int a[], int l, int mid, int r) {
+    int cnt = 0;  // 新数组t的长度
+    int i = l, j = mid + 1;
+    while (i &lt;= mid &amp;&amp; j &lt;= r) {
+        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];
+    }
+    while (i &lt;= mid) t[cnt++] = a[i++];
+    while (j &lt;= r) t[cnt++] = a[j++];
 
-在数组选一个数v(选中间的)，把数组左边变成&lt;=v，右边变成&gt;=v,使用分治的思想，分别对左边和右边进行快速排序
-理论上最优的策略是以他的中位数来做为划分依据, 让其划分得均匀
+    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];
+}
 
-注意：partition返回的是j，而不是i。
-解释：partition 返回j的原因：partition假如以中点向下取整(l + r &gt;&gt; 1), 只剩下两个数的时候(如 1 2) 就会以左边的1为基准值x，i 和 j 最后会cross over，因为是do while循环， i会到2的位置， j会到1的位置。 这样左边(l, j)是小于等于1， 右边(i, r)是大于等于1.这样不会死循环。若返回i就会发生划分的左边死循环，一直是(1, 2)划分，无限递归下去。
-若要返回i， 跟二分很像，则需要以中点向上取整(l + r + 1 &gt;&gt; 1)。 同理，还是以数组剩下两个元素（1， 2）为例， 基准值x取2. 当i, j cross over之后， 左边小于等于2为(l, i - 1), </div>
+void merge_sort(int a[], int l, int r) {
+    if (l &gt;= r) return;
+
+    in</div>
         </div>
       </a>
 
@@ -372,9 +675,9 @@ int[] a = new int[</div>
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Java">Java</a>&nbsp;
-          
             <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/Java">Java</a>&nbsp;
           
             <a href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>&nbsp;
           
@@ -417,9 +720,9 @@ int[] a = new int[</div>
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/C++">C++</a>&nbsp;
-          
             <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/C++">C++</a>&nbsp;
           
             <a href="/categories/STL">STL</a>&nbsp;
           

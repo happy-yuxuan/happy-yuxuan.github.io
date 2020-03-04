@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Victor Wu">
   <meta name="keywords" content="">
-  <title>标签 ~ Victor&#39;s blog</title>
+  <title>最短路 ~ Victor&#39;s blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -106,7 +106,7 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="view intro-2" id="background" false
          style="background: url('/img/default.png')no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -116,6 +116,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期三, 三月 4日 2020, 10:07 上午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    703 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      3 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -127,22 +162,218 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center tagcloud">
-  <a href="/tags/%E5%91%A8%E8%B5%9B%E6%94%B6%E8%B4%A7/" style="font-size: 15px; color: #bbe">周赛收货</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 30px; color: #337ab7">编程</a>
-</div>
-              </div>
-            </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p><img src="https://raw.githubusercontent.com/happy-yuxuan/picgo/master/img/image-20200127131950787.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h3><p>（堆优化版子）<code>T: O(mlogn)  S: O(n + m)</code></p>
+<pre><code class="lang-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+vector&lt;vector&lt;PII&gt;&gt; g;
+
+// 求 u 到 任何一点 的最短路
+int dijkstra(int u) {
+    vector&lt;int&gt; dist(n + 1, INT_MAX);
+    vector&lt;bool&gt; used(n + 1, false);
+    // vector&lt;int&gt; prev(n + 1, -1);   初试话为-1
+    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; q;
+    q.push({0, u});
+    while (!q.empty()) {
+        PII t = q.top(); q.pop();
+        int ver = t.second, dis = t.first;
+        if (used[ver]) continue;
+
+        used[ver] = true;
+        dist[ver] = dis;
+
+        for (auto &amp;e : g[ver]) {
+            int ne = e.first, w = e.second;
+            if (dist[ne] &gt; dist[ver] + w) {
+                dist[ne] = dist[ver] + w;
+                // prev[ne] = ver;    获取路径
+                q.push({dist[ne], ne});
+            }
+        }
+    }
+    // 返回到 u -&gt; n 的最短路
+    if (dist[n] == INT_MAX) return -1;
+    return dist[n];
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    g = vector&lt;vector&lt;PII&gt;&gt;(n + 1);  // 下标从1开始
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
+        g[a].push_back({b, c});
+    }
+    int ans = dijkstra(1);
+    printf(&quot;%d&quot;, ans);
+    return 0;
+}
+</code></pre>
+<ul>
+<li>打印路径</li>
+</ul>
+<pre><code class="lang-c++">// 根据prev获取路径
+vector&lt;int&gt; getPath(int t) {
+    vector&lt;int&gt; path;
+    for(; t != -1; t = prev[t])
+        path.push_back(t);
+    reverse(path.begin(),path.end());
+    return path; 
+}
+</code></pre>
+<h3 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h3><p> <code>T: O(n^3)  S: O(1)</code></p>
+<ul>
+<li>邻接矩阵（稠密图）</li>
+<li>允许负权边，不能有负权环</li>
+</ul>
+<p><strong>Note :</strong></p>
+<ol>
+<li>初试化时候对角线是0， 其他都是INF（INF不能是INT_MAX，做加法会越界）</li>
+<li>由于是邻接矩阵存储，重边的情况保留最短的边</li>
+<li>判断是否有路径的时候在边都是正数的情况下可以使用距离是否等于<code>g[a][b] == INF</code>判断，但有负权边则需要使用<code>g[a][b] &gt; INF / 2</code>。原因：当 <code>dist[i][j] = INF</code>,<code>dist[i][k] = INF</code>,<code>dist[k][j] = -10</code>时，那么dist[i][j]就会被更新成INF - 10，但此时i和j仍然是不连通的。</li>
+</ol>
+<pre><code class="lang-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int INF = 0x3f3f3f3f;  // floyd() 中 g[i][k] + g[k][j]可能越界。所以INF为0x3f3f3f3f
+
+int n, m;
+vector&lt;vector&lt;int&gt;&gt; g;
+
+// 初始化
+void init() {
+    g = vector&lt;vector&lt;int&gt;&gt;(n + 1, vector&lt;int&gt;(n + 1, INF));
+    for (int i = 1; i &lt;= n; i++) g[i][i] = 0;
+}
+
+// 下标从1开始, 若要0开始就对应改成[0, n)
+void floyd() {
+    for (int k = 1; k &lt;= n; k++)
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= n; j++)
+                g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
+}
+
+int main() {
+    int k;
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;k);
+
+    init();
+
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, w;
+        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;w);
+        g[a][b] = min(g[a][b], w);  // 邻接矩阵去重边需要把最小的保留
+    }
+
+    floyd();
+
+    for (int i = 0; i &lt; k; i++) {
+        int a, b;
+        scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+        if (g[a][b] &gt; INF / 2) printf(&quot;impossible\n&quot;);  // 若全是权边 判断 == INF就行
+        else printf(&quot;%d\n&quot;, g[a][b]);
+    }
+
+    return 0;
+}
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95">算法</a>
+                  &nbsp;
+                
+                  <a class="hover-with-bg" href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BC%96%E7%A8%8B">编程</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: 'cbf8fb8a51aff41416e3',
+      clientSecret: 'b5b2229a80bf94074fbe53aa502edefd17a2ab9c',
+      repo: 'happy-yuxuan.github.io',
+      owner: 'happy-yuxuan',
+      admin: 'happy-yuxuan',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'true'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -207,6 +438,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
@@ -235,7 +471,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签&nbsp;",
+        "最短路&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
