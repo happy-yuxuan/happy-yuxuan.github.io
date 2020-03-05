@@ -388,36 +388,32 @@ public class Main {
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">并查集算法实现总结朴素版并查集
-询问两个元素是否在同一个集合
-有多少个集合
-
-int p[N];    // 下标i为节点编号，p[i]表示该节点的祖宗节点是谁(父辈中任意的一个)
-
-// 初始化
-void initUF() {
-    for (int i = 0; i &lt; n; i++) {
-        p[i] = i;    // 每个节点的祖宗都是自己，自己单独成为一个集合
+          <div class="index-text mb-1">并查集简单实现并查集实现struct UF {
+    int count;
+    vector&lt;int&gt; p, siz;
+    UF(int n) {
+        count = n;
+        p = vector&lt;int&gt;(n, -1);
+        siz = vector&lt;int&gt;(n, 1);
     }
-}
-
-// 查：  查找元素所在集合 --- 找到自己最老的祖宗，即根祖宗
-int findR(int x) {
-    if (x != p[x]) {
-        p[x] = findR(p[x]);
+    int find(int x) {
+        if (p[x] == -1) return x;
+        return p[x] = find(p[x]);
     }
-    return p[x];
-}
+    void join(int x, int y) {
+        int t1 = find(x);
+        int t2 = find(y);
+        if (t1 != t2) {
+            p[t2] = t1;
+            siz[t1] += siz[t2];
+            count--;
+        }
+    }
+};
 
-// 查 简化写法
-int findR(int x) {
-    return p[x] == x ? x : p[x] = findR(p[x]);
-}
 
-// 并：   合并两个节点所在集合
-void Union(int a, int b) {
-    int ra = findR(a);
-    int rb = fi</div>
+初始化
+UF uf(100</div>
         </div>
       </a>
 
@@ -508,35 +504,29 @@ t加入确定的点中
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
-        <p class="h4 index-header">非递归前中后遍历总结</p>
+      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+        <p class="h4 index-header">层次遍历</p>
       </a>
 
-      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
+      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">非递归前中后遍历总结
-对于一个二叉树而言，前中后遍历分别对应第1，2，3次访问该节点。如在第一次访问该节点输出就是前序遍历，第二次访问该节点就是中序遍历，第三次访问该节点就是后序遍历。 在网上找到一张有意思的图。
+          <div class="index-text mb-1">二叉树层次遍历模板模板一：以每层为单位操作vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+    vector&lt;vector&lt;int&gt;&gt; ans;
+    if (!root) return ans;
 
-
-用中序遍历的思想实现前后遍历(常用遍历技巧)
-前序遍历vector&lt;int&gt; preorderTraversal(TreeNode* root) {
-    vector&lt;int&gt; ans;
-
-    stack&lt;TreeNode*&gt; stk;
-    auto p = root;
-    while (p || !stk.empty()) {
-        while (p) {
-            ans.push_back(p-&gt;val);  // 前序遍历 ①
-            stk.push(p);
-            p = p-&gt;left;
-        }
-        p = stk.top(); stk.pop();    
-        p = p-&gt;right;
-    </div>
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        int siz = q.size();  // 记录当前层有多少个节点
+        vector&lt;int&gt; level;
+        for (int i = 0; i &lt; siz; i++) {  // 让当前层的节点出队， 把下一层的节点放入队列中
+            auto t = q.front(); q.pop();
+            level.push_back(t-&gt;val);
+            if (t-&gt;left) q.push(t-&gt;left);</div>
         </div>
       </a>
 
@@ -621,29 +611,35 @@ for (int i = 0; i &lt; n; i++) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
-        <p class="h4 index-header">层次遍历</p>
+      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
+        <p class="h4 index-header">非递归前中后遍历总结</p>
       </a>
 
-      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">二叉树层次遍历模板模板一：以每层为单位操作vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
-    vector&lt;vector&lt;int&gt;&gt; ans;
-    if (!root) return ans;
+          <div class="index-text mb-1">非递归前中后遍历总结
+对于一个二叉树而言，前中后遍历分别对应第1，2，3次访问该节点。如在第一次访问该节点输出就是前序遍历，第二次访问该节点就是中序遍历，第三次访问该节点就是后序遍历。 在网上找到一张有意思的图。
 
-    queue&lt;TreeNode*&gt; q;
-    q.push(root);
-    while (!q.empty()) {
-        int siz = q.size();  // 记录当前层有多少个节点
-        vector&lt;int&gt; level;
-        for (int i = 0; i &lt; siz; i++) {  // 让当前层的节点出队， 把下一层的节点放入队列中
-            auto t = q.front(); q.pop();
-            level.push_back(t-&gt;val);
-            if (t-&gt;left) q.push(t-&gt;left);</div>
+
+用中序遍历的思想实现前后遍历(常用遍历技巧)
+前序遍历vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+    vector&lt;int&gt; ans;
+
+    stack&lt;TreeNode*&gt; stk;
+    auto p = root;
+    while (p || !stk.empty()) {
+        while (p) {
+            ans.push_back(p-&gt;val);  // 前序遍历 ①
+            stk.push(p);
+            p = p-&gt;left;
+        }
+        p = stk.top(); stk.pop();    
+        p = p-&gt;right;
+    </div>
         </div>
       </a>
 

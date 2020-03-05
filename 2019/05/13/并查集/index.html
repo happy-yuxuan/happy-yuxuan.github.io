@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    465 字
+                    225 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      2 分钟
+                      1 分钟
                   </span>&nbsp;
                 
 
@@ -171,95 +171,52 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="并查集算法实现总结"><a href="#并查集算法实现总结" class="headerlink" title="并查集算法实现总结"></a>并查集算法实现总结</h1><h3 id="朴素版并查集"><a href="#朴素版并查集" class="headerlink" title="朴素版并查集"></a>朴素版并查集</h3><ul>
-<li>询问两个元素是否在同一个集合</li>
-<li>有多少个集合</li>
+            <h1 id="并查集简单实现"><a href="#并查集简单实现" class="headerlink" title="并查集简单实现"></a>并查集简单实现</h1><h3 id="并查集实现"><a href="#并查集实现" class="headerlink" title="并查集实现"></a>并查集实现</h3><pre><code class="lang-c++">struct UF {
+    int count;
+    vector&lt;int&gt; p, siz;
+    UF(int n) {
+        count = n;
+        p = vector&lt;int&gt;(n, -1);
+        siz = vector&lt;int&gt;(n, 1);
+    }
+    int find(int x) {
+        if (p[x] == -1) return x;
+        return p[x] = find(p[x]);
+    }
+    void join(int x, int y) {
+        int t1 = find(x);
+        int t2 = find(y);
+        if (t1 != t2) {
+            p[t2] = t1;
+            siz[t1] += siz[t2];
+            count--;
+        }
+    }
+};
+</code></pre>
+<ul>
+<li><p>初始化</p>
+<pre><code class="lang-c++">UF uf(1000);   // 0 ~ 999编号
+</code></pre>
+</li>
+<li><p>并  （合并两个节点的集合）</p>
+<pre><code class="lang-c++">uf.join(5, 6);  // 把5和6所在的集合并起来
+</code></pre>
+</li>
+<li><p>查  （询问两个节点是否在同一个集合）</p>
+<pre><code class="lang-c++">uf.find(5) == uf.find(6);    // 查编号5的节点跟编号6的节点是不是一个集合的
+</code></pre>
+</li>
+<li><p>有多少个集合（有多少个连通分量）</p>
+<pre><code class="lang-c++">uf.count;
+// 或者笨笨办法办法统计父节点为-1的元素个数
+</code></pre>
+</li>
+<li><p>对应节点所在集合的元素个数</p>
+<pre><code class="lang-c++">uf.siz[uf.find(5)];  // 5节点所在集合的节点个数
+</code></pre>
+</li>
 </ul>
-<pre><code class="lang-c++">int p[N];    // 下标i为节点编号，p[i]表示该节点的祖宗节点是谁(父辈中任意的一个)
-
-// 初始化
-void initUF() {
-    for (int i = 0; i &lt; n; i++) {
-        p[i] = i;    // 每个节点的祖宗都是自己，自己单独成为一个集合
-    }
-}
-
-// 查：  查找元素所在集合 --- 找到自己最老的祖宗，即根祖宗
-int findR(int x) {
-    if (x != p[x]) {
-        p[x] = findR(p[x]);
-    }
-    return p[x];
-}
-
-// 查 简化写法
-int findR(int x) {
-    return p[x] == x ? x : p[x] = findR(p[x]);
-}
-
-// 并：   合并两个节点所在集合
-void Union(int a, int b) {
-    int ra = findR(a);
-    int rb = findR(b);
-    if (ra != rb) {
-        p[rb] = ra;    // 把b所在集合接到a所在集合
-    }
-}
-</code></pre>
-<h4 id="vector版本"><a href="#vector版本" class="headerlink" title="vector版本"></a>vector版本</h4><pre><code class="lang-c++">vector&lt;int&gt; p(n);
-
-// init
-iota(p.begin(), p.end(), 0);
-
-// find 
-int findR(intx x) {
-    return p[x] == x ? x : p[x] = findR(p[x]);
-}
-
-// Union
-void Union(int a, int b) {
-    p[findR(b)] = p[findR(a)];
-}
-</code></pre>
-<h3 id="维护rootSize的并查集-可拓展维护集合的所有信息，都可以类似这样写"><a href="#维护rootSize的并查集-可拓展维护集合的所有信息，都可以类似这样写" class="headerlink" title="维护rootSize的并查集 (可拓展维护集合的所有信息，都可以类似这样写)"></a>维护rootSize的并查集 (可拓展维护集合的所有信息，都可以类似这样写)</h3><pre><code class="lang-c++">int p[N], rootSize[N];    // rootSize[i]表示i节点所在集合的元素个数， 只有根祖宗的数值才有意义
-
-void initUF() {
-    for (int i = 0; i &lt; n; i++) {
-        p[i] = i;
-        rootSize[i] = 1;    // 开始每个节点是独立的集合，所以大小为1
-    }
-}
-
-int findR(int x) {
-    if (x != p[x]) {
-        p[x] = findR(p[x]);
-    }
-    return p[x];
-}
-
-void Union(int a, int b) {
-    int ra = findR(a);
-    int rb = findR(b);
-    if (ra != rb) {
-        rootSize[ra] += rootSize[rb];    // 在把rb接到ra之前先把rb整个元素大小都送给ra
-        p[rb] = ra;
-    }
-}
-</code></pre>
-<h3 id="获取结构信息"><a href="#获取结构信息" class="headerlink" title="获取结构信息"></a>获取结构信息</h3><pre><code class="lang-c++">// 询问两个元素是否在同一个集合
-bool isConnected(int a, int b) {
-    return findR(a) == findR(b);
-}
-
-// 每个根祖宗的p[]指向得都是自己
-int sizeOfUF() {
-    int res = 0;
-    for (int i = 0; i &lt; n; i++) {
-        if (p[i] == i) res++;
-    }
-    return res;
-}
-</code></pre>
 
             <hr>
           </div>
