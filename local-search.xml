@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>STL平衡树中迭代删除的坑</title>
+    <link href="/2020/03/09/%E5%B9%B3%E8%A1%A1%E6%A0%91%E4%B8%AD%E8%BF%AD%E4%BB%A3%E5%88%A0%E9%99%A4/"/>
+    <url>/2020/03/09/%E5%B9%B3%E8%A1%A1%E6%A0%91%E4%B8%AD%E8%BF%AD%E4%BB%A3%E5%88%A0%E9%99%A4/</url>
+    
+    <content type="html"><![CDATA[<h1 id="STL平衡树中迭代删除的坑"><a href="#STL平衡树中迭代删除的坑" class="headerlink" title="STL平衡树中迭代删除的坑"></a>STL平衡树中迭代删除的坑</h1><p><em>昨天在map中在使用反向迭代器过程中删除的时候引发一些问题。死循环或者段错误，顾总结一下这个坑</em></p><h2 id="正向遍历删除"><a href="#正向遍历删除" class="headerlink" title="正向遍历删除"></a>正向遍历删除</h2><p>倘若有一个需求让你在map中操作，按key<strong>从小到大</strong>遍历，把全部key对应的value值为2的key从map中删除。</p><p>先上结论：</p><pre><code class="lang-c++">// 正确写法for (auto it = mp.begin(); it != mp.end(); ) {    if (it-&gt;second == 2)        mp.erase(it++);    else         it++;   // c++11后可以用 it = next(it);}</code></pre><pre><code class="lang-c++">// 错误写法for (auto it = mp.begin(); it != mp.end(); it++) {    if (it-&gt;second == 2)        mp.erase(it);}</code></pre><ul><li>对 list 和 vector 来说，它们的 erase 函数会返回下一个迭代器，因此在遍历时，只需要 <code>it = c.erase(it)</code> 即可。</li></ul><ul><li><p>对 map 和 set 来说，它们的 erase 函数返回的 void，而在进行 erase 之后，<strong>当前迭代器会失效，无法再用于获取下一个迭代器</strong>。因此需要 erase 之前就获取指向下一个元素的迭代器。如： </p><pre><code class="lang-c++">auto tmpIt = it;++it;mp.erase(tmpIt);</code></pre><pre><code class="lang-c++">// 利用后缀++操作符的特性（先创建副本，然后再递增迭代器，然后返回副本）//上面的三行代码可以简化为一行：mp.erase(it++);</code></pre></li></ul><h2 id="逆向删除"><a href="#逆向删除" class="headerlink" title="逆向删除"></a>逆向删除</h2><p>同样问题，只是改成从大到小遍历：倘若有一个需求让你在map中操作，按key<strong>从大到小</strong>遍历，把全部key对应的value值为2的key从map中删除。</p><pre><code class="lang-c++">// 正确写法for (auto rit = mp.rbegin(); rit != mp.rend(); ) {    if (rit-&gt;second == 2)        mp.erase(--(rit.base()));  // c++ 11可以使用 mp.erase(next(rit).base());    else         rit++;}</code></pre><p>原理解释： 借用一个图来说明问题</p><p><img src="https://i.cmpnet.com/ddj/cuj/images/cuj0106smeyers/diagram2.gif" srcset="/img/loading.gif" alt=""></p><p>首先， erase函数是<strong>不接受反向迭代器作为参数</strong>， 所以需要转化成正向迭代器进行传入。</p><p>其次， <em>关于正向/反向迭代器的关系，请参考《Effective STL》</em>两者<strong>相差一个元素</strong>，从一个<strong>反向迭代器获得对应的正向迭代器</strong>需要使用 <code>base()</code>方法。如下图所示：ri 是指向元素3的反向迭代器，而<code>i</code>是<code>ri.base()</code>所得到的正向迭代器。</p><p>最后，需要对得到的i进行自减操作，就会到3这个位置，从而进行删除。</p><pre><code class="lang-c++">mp.erase(--(rit.base()));   // 先获得正向迭代器，再--操作偏移一个得到当前所在的位置</code></pre><pre><code class="lang-c++">// c++11可以写成mp.erase(next(rit).base());   // 或者rit先向左边走一格，在取base()也可以// 但不能写成，有大神可以告诉我为什么吗？ 待定解决问题mp.erase((++rit).base());   // 在删除剩下的最后一个数的时候会死循环</code></pre><blockquote><p><strong>参考文献</strong>：<a href="https://stackoverflow.com/questions/1830158/how-to-call-erase-with-a-reverse-iterator" target="_blank" rel="noopener">stack overflow连接 </a></p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+      <category>STL</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>洗牌算法及其验证</title>
     <link href="/2020/03/04/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/"/>
     <url>/2020/03/04/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/</url>
@@ -527,18 +554,18 @@
   
   
   <entry>
-    <title>单调栈</title>
-    <link href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/"/>
-    <url>/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/</url>
+    <title>拓扑排序</title>
+    <link href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/"/>
+    <url>/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</url>
     
-    <content type="html"><![CDATA[<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><ul><li>维护一个具有<strong>单调性质的栈</strong>， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。</li></ul><h3 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h3><h4 id="单调栈-1"><a href="#单调栈-1" class="headerlink" title="单调栈"></a><a href="https://www.acwing.com/problem/content/832/" target="_blank" rel="noopener">单调栈</a></h4><ul><li>只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。</li></ul><pre><code class="lang-c++">for (int i = 0; i &lt; n; i++) {    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {        stk.pop();    }    if (stk.empty()) {   // 左边没有比他小的元素        printf(&quot;-1 &quot;);    } else {   // 栈顶元素是第一个比他小的数        printf(&quot;%d &quot;, stk.top());    }    stk.push(nums[i]);}</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><h3 id="算法思想：bfs"><a href="#算法思想：bfs" class="headerlink" title="算法思想：bfs"></a>算法思想：bfs</h3><ul><li>把所有入度为0的点全部放入队列。</li><li>只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。</li><li>把每个入度被减成0的节点放入队列</li></ul><pre><code class="lang-c++">/*     n 节点个数，下标从1开始    graph 邻接表    inD 每个节点的入度    ans 保存拓扑序*/bool topsort() {    queue&lt;int&gt; q;    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列        if (inD[i] == 0)            q.push(i);    while (!q.empty()) {        int t = q.front(); q.pop();  // 拿一个入度为0的点        ans.push_back(t);        for (int v : graph[t])  // 把以该点t为入度的点的入度减一            if (--inD[v] == 0)                 q.push(v);  // 若减成0，则入队    }    return ans.size() == n;  // 若全部节点都被访问才说明有 拓扑序}</code></pre>]]></content>
     
     
     <categories>
       
       <category>算法</category>
       
-      <category>数据结构</category>
+      <category>图论</category>
       
     </categories>
     
@@ -554,18 +581,18 @@
   
   
   <entry>
-    <title>拓扑排序</title>
-    <link href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/"/>
-    <url>/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</url>
+    <title>单调栈</title>
+    <link href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/"/>
+    <url>/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/</url>
     
-    <content type="html"><![CDATA[<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><h3 id="算法思想：bfs"><a href="#算法思想：bfs" class="headerlink" title="算法思想：bfs"></a>算法思想：bfs</h3><ul><li>把所有入度为0的点全部放入队列。</li><li>只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。</li><li>把每个入度被减成0的节点放入队列</li></ul><pre><code class="lang-c++">/*     n 节点个数，下标从1开始    graph 邻接表    inD 每个节点的入度    ans 保存拓扑序*/bool topsort() {    queue&lt;int&gt; q;    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列        if (inD[i] == 0)            q.push(i);    while (!q.empty()) {        int t = q.front(); q.pop();  // 拿一个入度为0的点        ans.push_back(t);        for (int v : graph[t])  // 把以该点t为入度的点的入度减一            if (--inD[v] == 0)                 q.push(v);  // 若减成0，则入队    }    return ans.size() == n;  // 若全部节点都被访问才说明有 拓扑序}</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><ul><li>维护一个具有<strong>单调性质的栈</strong>， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。</li></ul><h3 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h3><h4 id="单调栈-1"><a href="#单调栈-1" class="headerlink" title="单调栈"></a><a href="https://www.acwing.com/problem/content/832/" target="_blank" rel="noopener">单调栈</a></h4><ul><li>只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。</li></ul><pre><code class="lang-c++">for (int i = 0; i &lt; n; i++) {    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {        stk.pop();    }    if (stk.empty()) {   // 左边没有比他小的元素        printf(&quot;-1 &quot;);    } else {   // 栈顶元素是第一个比他小的数        printf(&quot;%d &quot;, stk.top());    }    stk.push(nums[i]);}</code></pre>]]></content>
     
     
     <categories>
       
       <category>算法</category>
       
-      <category>图论</category>
+      <category>数据结构</category>
       
     </categories>
     
@@ -635,65 +662,38 @@
   
   
   <entry>
-    <title>位运算</title>
-    <link href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
-    <url>/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
-    
-    <content type="html"><![CDATA[<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><p><code>1 &lt;&lt; n</code> 2的n次方</p><h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><pre><code class="lang-c++">// 求n的第k位数字: n &gt;&gt; k &amp; 1// 返回n的最后一位1：（就是n的二进制表示最后一个1出现的位置是1， 其余位置都是0）int lowbit(int n) {    return n &amp; -n;}</code></pre><h2 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h2><h4 id="位1的个数"><a href="#位1的个数" class="headerlink" title="位1的个数"></a><a href="https://leetcode-cn.com/problems/number-of-1-bits/" target="_blank" rel="noopener">位1的个数</a></h4><ul><li>让n减lowbit操作的数（每次减掉了最末尾的1）， 减了多少次到0， 就是多少个1.</li></ul><pre><code class="lang-c++">class Solution {public:    uint32_t lowbit(uint32_t n) {        return n &amp; -n;    }    int hammingWeight(uint32_t n) {        int ans = 0;        for (uint32_t i = n; i != 0; i -= lowbit(i)) {            ans++;        }        return ans;    }};</code></pre>]]></content>
-    
-    
-    <categories>
-      
-      <category>算法</category>
-      
-      <category>基础</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>编程</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>前缀和 &amp; 差分</title>
-    <link href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&amp;%E5%B7%AE%E5%88%86/"/>
-    <url>/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&amp;%E5%B7%AE%E5%88%86/</url>
-    
-    <content type="html"><![CDATA[<h1 id="前缀和-amp-差分"><a href="#前缀和-amp-差分" class="headerlink" title="前缀和 &amp; 差分"></a>前缀和 &amp; 差分</h1><h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><h4 id="一维"><a href="#一维" class="headerlink" title="一维"></a>一维</h4><ul><li>s[i] 表示前i个数<code>[0, i)</code>的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断</li><li>前缀和数组<code>s</code>下标从1开始， 原数组<code>nums</code>下标从0开始</li></ul><pre><code class="lang-c++">// s[0] = 0for (int i = 1; i &lt;= n; i++) {    s[i] = s[i-1] + nums[i-1];}// l, r是指原数组下标区间// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r// s[l]  : [0, l-1]     0, 1, ..., l-1 , // 相减                       [l, r]的和 ：l, ..., r                 int l_to_r_sum = s[r+1] - s[l];</code></pre><h4 id="二维"><a href="#二维" class="headerlink" title="二维"></a>二维</h4><pre><code class="lang-c++">// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始// 算前缀和for (int i = 1; i &lt;= n; i++) {    for (int j = 1; j &lt;= m; j++) {        s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + mat[i-1][j-1];    }}// (x1, y1) 为左上角， (x2, y2)为右上角. 坐标对应原数组下标。 下标偏移了1int sum = s[x2+1][y2+1] - s[x1][y2+1] - s[x2+1][y1] + s[x1][y1];</code></pre><h2 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h2><h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><h4 id="一维-1"><a href="#一维-1" class="headerlink" title="一维"></a>一维</h4><ul><li>所求数组s（下标从0开始）为一个数组的前缀和数组， 处前把其变成下标从1开始，让<code>s[0] == 0</code></li><li>求出原数组<code>nums</code></li><li>把原数组还原成s数组， 根据题目需要是否把s数组改回成下标从0开始</li></ul><pre><code class="lang-c++">// 让s[0] == 0for (int i = 1; i &lt;= n; i++) {    nums[i-1] = s[i] - s[i-1];   // 前缀和的逆运算 s[i] = s[i-1] + nums[i-1]}// 区间[l, r]增加一个数c ， l, r是从0开始的下标nums[l] += c;   //等价对应s数组 l... r, r+1, ..., n-1 全部增加了cnums[r+1] -= c; //等价对应s数组         r+1, ..., n-1 全部减少c                // s数组 [l, r] 增加了cfor (int i = 1; i &lt;= n; i++) {    s[i] = s[i-1] + nums[i-1]}// 再把s数字变成以0为下标// remove first item in array of s</code></pre><h4 id="二维-1"><a href="#二维-1" class="headerlink" title="二维"></a>二维</h4><pre><code class="lang-c++">// s原数组变成下标从1开始， 原来从0开始，（第0行和第0列都置成0）// 算差分数组mat， 下标从0开始， 但是mat数组也要开多一维for (int i = 1; i &lt;= n; i++) {    for (int j = 1; j &lt;= m; j++) {        mat[i-1][j-1] = s[i][j] - s[i-1][j] - s[i][j-1] + s[i-1][j-1];    }}mat[x1][y1] += c;mat[x2+1][y1] -= c;mat[x1][y2+1] -= c;mat[x2+1][y2+1] += c;  // 可能越界， 所以要开多一维，最后一行和最后一列都为0for (int i = 1; i &lt;= n; i++) {    for (int j = 1; j &lt;= m; j++) {        s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + mat[i-1][j-1];    }}// 还原s数组从0坐标开始</code></pre>]]></content>
-    
-    
-    <categories>
-      
-      <category>算法</category>
-      
-      <category>基础</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>编程</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>区间合并</title>
     <link href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/"/>
     <url>/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/</url>
     
     <content type="html"><![CDATA[<h1 id="区间合并"><a href="#区间合并" class="headerlink" title="区间合并"></a>区间合并</h1><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h4 id="合并区间"><a href="#合并区间" class="headerlink" title="合并区间"></a><a href="https://leetcode-cn.com/problems/merge-intervals/" target="_blank" rel="noopener">合并区间</a></h4><p> 思路：</p><ol><li><p>先对区间的左端点进行排序。</p></li><li><p>如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。</p></li></ol><ul><li>新建一个数组保存区间</li></ul><pre><code class="lang-c++">class Solution {public:    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {        vector&lt;vector&lt;int&gt;&gt; ans;        if (intervals.size() &lt;= 1) {            ans = intervals;            return ans;        }        sort(intervals.begin(), intervals.end());        ans.push_back(intervals[0]);        for (int i = 1; i &lt; intervals.size(); i++) {            auto &amp;pre = ans.back();            auto cur = intervals[i];            if (pre[1] &gt;= cur[0]) {                 pre[1] = max(pre[1], cur[1]);            } else {                ans.push_back({cur});            }        }        return ans;    }};</code></pre><ul><li>原地</li></ul><pre><code class="lang-c++">class Solution {public:    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {        if (intervals.size() &lt;= 1) return intervals;        sort(intervals.begin(), intervals.end());        int cnt = 0;  // 当前区间的位置        for (int i = 1; i &lt; intervals.size(); i++) {            auto &amp;pre = intervals[cnt];            auto &amp;cur = intervals[i];            if (pre[1] &gt;= cur[0]) {                pre[1] = max(pre[1], cur[1]);            } else {                intervals[++cnt] = cur;            }        }        // 把后面多出来的删掉        int deleteTime = intervals.size() - 1 - cnt;        while (deleteTime--) intervals.pop_back();        return intervals;    }};</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+      <category>基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>位运算</title>
+    <link href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    <url>/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
+    
+    <content type="html"><![CDATA[<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><p><code>1 &lt;&lt; n</code> 2的n次方</p><h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><pre><code class="lang-c++">// 求n的第k位数字: n &gt;&gt; k &amp; 1// 返回n的最后一位1：（就是n的二进制表示最后一个1出现的位置是1， 其余位置都是0）int lowbit(int n) {    return n &amp; -n;}</code></pre><h2 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h2><h4 id="位1的个数"><a href="#位1的个数" class="headerlink" title="位1的个数"></a><a href="https://leetcode-cn.com/problems/number-of-1-bits/" target="_blank" rel="noopener">位1的个数</a></h4><ul><li>让n减lowbit操作的数（每次减掉了最末尾的1）， 减了多少次到0， 就是多少个1.</li></ul><pre><code class="lang-c++">class Solution {public:    uint32_t lowbit(uint32_t n) {        return n &amp; -n;    }    int hammingWeight(uint32_t n) {        int ans = 0;        for (uint32_t i = n; i != 0; i -= lowbit(i)) {            ans++;        }        return ans;    }};</code></pre>]]></content>
     
     
     <categories>
@@ -743,11 +743,11 @@
   
   
   <entry>
-    <title>归并排序</title>
-    <link href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
-    <url>/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
+    <title>前缀和 &amp; 差分</title>
+    <link href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&amp;%E5%B7%AE%E5%88%86/"/>
+    <url>/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&amp;%E5%B7%AE%E5%88%86/</url>
     
-    <content type="html"><![CDATA[<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h4 id="归并排序-1"><a href="#归并排序-1" class="headerlink" title="归并排序"></a>归并排序</h4><p><code>均摊时间：O(nlogn) &amp; 空间：O(n)</code></p><pre><code class="lang-c++">// const int N = 100010;// int t[N];void merge(int a[], int l, int mid, int r) {    int cnt = 0;  // 新数组t的长度    int i = l, j = mid + 1;    while (i &lt;= mid &amp;&amp; j &lt;= r) {        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];    }    while (i &lt;= mid) t[cnt++] = a[i++];    while (j &lt;= r) t[cnt++] = a[j++];    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];}void merge_sort(int a[], int l, int r) {    if (l &gt;= r) return;    int mid = l + r &gt;&gt; 1;    merge_sort(a, l, mid);   // 排序左半边    merge_sort(a, mid + 1, r);    // 排序右半边    merge(a, l, mid, r);   // 合并左半边和右半边}</code></pre><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="求逆序数"><a href="#求逆序数" class="headerlink" title="求逆序数"></a>求逆序数</h3><pre><code class="lang-c++"></code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="前缀和-amp-差分"><a href="#前缀和-amp-差分" class="headerlink" title="前缀和 &amp; 差分"></a>前缀和 &amp; 差分</h1><h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><h4 id="一维"><a href="#一维" class="headerlink" title="一维"></a>一维</h4><ul><li>s[i] 表示前i个数<code>[0, i)</code>的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断</li><li>前缀和数组<code>s</code>下标从1开始， 原数组<code>nums</code>下标从0开始</li></ul><pre><code class="lang-c++">// s[0] = 0for (int i = 1; i &lt;= n; i++) {    s[i] = s[i-1] + nums[i-1];}// l, r是指原数组下标区间// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r// s[l]  : [0, l-1]     0, 1, ..., l-1 , // 相减                       [l, r]的和 ：l, ..., r                 int l_to_r_sum = s[r+1] - s[l];</code></pre><h4 id="二维"><a href="#二维" class="headerlink" title="二维"></a>二维</h4><pre><code class="lang-c++">// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始// 算前缀和for (int i = 1; i &lt;= n; i++) {    for (int j = 1; j &lt;= m; j++) {        s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + mat[i-1][j-1];    }}// (x1, y1) 为左上角， (x2, y2)为右上角. 坐标对应原数组下标。 下标偏移了1int sum = s[x2+1][y2+1] - s[x1][y2+1] - s[x2+1][y1] + s[x1][y1];</code></pre><h2 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h2><h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><h4 id="一维-1"><a href="#一维-1" class="headerlink" title="一维"></a>一维</h4><ul><li>所求数组s（下标从0开始）为一个数组的前缀和数组， 处前把其变成下标从1开始，让<code>s[0] == 0</code></li><li>求出原数组<code>nums</code></li><li>把原数组还原成s数组， 根据题目需要是否把s数组改回成下标从0开始</li></ul><pre><code class="lang-c++">// 让s[0] == 0for (int i = 1; i &lt;= n; i++) {    nums[i-1] = s[i] - s[i-1];   // 前缀和的逆运算 s[i] = s[i-1] + nums[i-1]}// 区间[l, r]增加一个数c ， l, r是从0开始的下标nums[l] += c;   //等价对应s数组 l... r, r+1, ..., n-1 全部增加了cnums[r+1] -= c; //等价对应s数组         r+1, ..., n-1 全部减少c                // s数组 [l, r] 增加了cfor (int i = 1; i &lt;= n; i++) {    s[i] = s[i-1] + nums[i-1]}// 再把s数字变成以0为下标// remove first item in array of s</code></pre><h4 id="二维-1"><a href="#二维-1" class="headerlink" title="二维"></a>二维</h4><pre><code class="lang-c++">// s原数组变成下标从1开始， 原来从0开始，（第0行和第0列都置成0）// 算差分数组mat， 下标从0开始， 但是mat数组也要开多一维for (int i = 1; i &lt;= n; i++) {    for (int j = 1; j &lt;= m; j++) {        mat[i-1][j-1] = s[i][j] - s[i-1][j] - s[i][j-1] + s[i-1][j-1];    }}mat[x1][y1] += c;mat[x2+1][y1] -= c;mat[x1][y2+1] -= c;mat[x2+1][y2+1] += c;  // 可能越界， 所以要开多一维，最后一行和最后一列都为0for (int i = 1; i &lt;= n; i++) {    for (int j = 1; j &lt;= m; j++) {        s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + mat[i-1][j-1];    }}// 还原s数组从0坐标开始</code></pre>]]></content>
     
     
     <categories>
@@ -775,6 +775,33 @@
     <url>/2019/02/01/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
     
     <content type="html"><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h4 id="快速排序-1"><a href="#快速排序-1" class="headerlink" title="快速排序"></a>快速排序</h4><p><code>均摊时间：O(nlogn) &amp; 空间：O(logn)</code></p><ul><li>在数组选一个数v(选中间的)，把数组左边变成<code>&lt;=v</code>，右边变成<code>&gt;=v</code>,使用分治的思想，分别对<strong>左边</strong>和<strong>右边</strong>进行快速排序</li><li>理论上最优的策略是以他的中位数来做为划分依据, 让其划分得均匀</li></ul><p><em>注意：partition返回的是j，而不是i。</em></p><p><strong>解释：</strong><br><code>partition</code> 返回j的原因：<br><code>partition</code>假如以中点向下取整(l + r &gt;&gt; 1), 只剩下两个数的时候(如 <code>1 2</code>) 就会以左边的<code>1</code>为基准值<code>x</code>，<code>i</code> 和 <code>j</code> 最后会cross over，因为是do while循环， <strong>i会到2的位置， j会到1的位置</strong>。 这样左边(l, j)是小于等于1， 右边(i, r)是大于等于1.这样不会死循环。<strong>若返回i就会发生划分的左边死循环，一直是(1, 2)划分，无限递归下去</strong>。</p><p>若要<code>返回i</code>， 跟二分很像，则需要以中点向上取整(<code>l + r + 1 &gt;&gt; 1</code>)。 同理，还是以数组剩下两个元素（1， 2）为例， 基准值x取2. 当i, j cross over之后， 左边小于等于2为(<code>l, i - 1</code>), 右边大于等于2为(<code>i， r</code>)。</p><p><strong>为什么写do while 循环, 尝试例子数组排序 <code>1 2 1</code> , 死循环. 因为交换完的时候就卡住了.</strong></p><ul><li>向下取整</li></ul><pre><code class="lang-c++">int partition(int a[], int l, int r) {    int x = a[l + r &gt;&gt; 1];   //  下取整    int i = l - 1, j = r + 1;    while (i &lt; j) {        do ++i; while (a[i] &lt; x);        do --j; while (a[j] &gt; x);        if (i &lt; j) swap(a[i], a[j]);    }    return j;    // 一定是j}void quick_sort(int a[], int l, int r) {    if (l &gt;= r) return;    int p = partition(a, l, r);    quick_sort(a, l, p);   // 划分区间    quick_sort(a, p + 1, r);}</code></pre><ul><li>向上取整</li></ul><pre><code class="lang-c++">int partition(int a[], int l, int r) {    int x = a[l + r + 1 &gt;&gt; 1];   // 上取整    int i = l - 1, j = r + 1;    while (i &lt; j) {        do ++i; while (a[i] &lt; x);        do --j; while (a[j] &gt; x);        if (i &lt; j) swap(a[i], a[j]);    }    return i;   // 一定是i}void quick_sort(int a[], int l, int r) {    if (l &gt;= r) return;    int p = partition(l, r);    quick_sort(l, p - 1);   // 划分区间    quick_sort(p, r);}</code></pre><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="第k小的数"><a href="#第k小的数" class="headerlink" title="第k小的数"></a>第k小的数</h3><p>在无序数组中找第k小的数字</p><pre><code class="lang-c++">int partition(int a[], int l, int r) {    int x = a[l + r &gt;&gt; 1];    int i = l - 1, j = r + 1;    while (i &lt; j) {        do i++; while (a[i] &lt; x);        do j--; while (a[j] &gt; x);        if (i &lt; j) swap(a[i], a[j]);    }    return j;}int quick_sort(int a[], int l, int r, int k) {    if (l == r) return a[l];    int p = partition(a, l, r);    int leftNum = p - l + 1;  // 左边比基准值小的个数    if (leftNum &gt;= k) return quick_sort(a, l, p, k);   // 从左边找第k个的数    return quick_sort(a, p + 1, r, k - leftNum);   // 从右边找第k - leftNum的数, 因为左边已经有leftNum个数了}</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+      <category>基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>归并排序</title>
+    <link href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
+    <url>/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h4 id="归并排序-1"><a href="#归并排序-1" class="headerlink" title="归并排序"></a>归并排序</h4><p><code>均摊时间：O(nlogn) &amp; 空间：O(n)</code></p><pre><code class="lang-c++">// const int N = 100010;// int t[N];void merge(int a[], int l, int mid, int r) {    int cnt = 0;  // 新数组t的长度    int i = l, j = mid + 1;    while (i &lt;= mid &amp;&amp; j &lt;= r) {        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];    }    while (i &lt;= mid) t[cnt++] = a[i++];    while (j &lt;= r) t[cnt++] = a[j++];    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];}void merge_sort(int a[], int l, int r) {    if (l &gt;= r) return;    int mid = l + r &gt;&gt; 1;    merge_sort(a, l, mid);   // 排序左半边    merge_sort(a, mid + 1, r);    // 排序右半边    merge(a, l, mid, r);   // 合并左半边和右半边}</code></pre><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="求逆序数"><a href="#求逆序数" class="headerlink" title="求逆序数"></a>求逆序数</h3><pre><code class="lang-c++"></code></pre>]]></content>
     
     
     <categories>
@@ -841,9 +868,9 @@
       
       <category>C++</category>
       
-      <category>技巧</category>
-      
       <category>STL</category>
+      
+      <category>技巧</category>
       
     </categories>
     

@@ -206,6 +206,64 @@ bool topsort() {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
+        <p class="h4 index-header">单调栈</p>
+      </a>
+
+      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">单调栈算法思想：
+维护一个具有单调性质的栈， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。
+
+经典例题单调栈
+只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。
+
+for (int i = 0; i &lt; n; i++) {
+    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {
+        stk.pop();
+    }
+    if (stk.empty()) {   // 左边没有比他小的元素
+        printf(&quot;-1 &quot;);
+    } else {   // 栈顶元素是第一个比他小的数
+        printf(&quot;%d &quot;, stk.top());
+    }
+    stk.push(nums[i]);
+}
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/04/%E6%95%B0%E8%AE%BA%E6%80%BB%E7%BB%93/">
         <p class="h4 index-header">数论</p>
       </a>
@@ -321,6 +379,68 @@ int bsearch_1(int l, int r)
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        <p class="h4 index-header">区间合并</p>
+      </a>
+
+      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">区间合并应用合并区间 思路：
+
+先对区间的左端点进行排序。
+
+如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
+
+
+
+新建一个数组保存区间
+
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        if (intervals.size() &lt;= 1) {
+            ans = intervals;
+            return ans;
+        }
+
+        sort(intervals.begin(), intervals.end());
+
+        ans.push_back(intervals[0]);
+        for (int i = 1; i &lt; intervals.si</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
         <p class="h4 index-header">位运算</p>
       </a>
@@ -359,127 +479,6 @@ public:
 };
 
 </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
-        <p class="h4 index-header">前缀和 &amp; 差分</p>
-      </a>
-
-      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">前缀和 &amp; 差分前缀和模板一维
-s[i] 表示前i个数[0, i)的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断
-前缀和数组s下标从1开始， 原数组nums下标从0开始
-
-// s[0] = 0
-for (int i = 1; i &lt;= n; i++) {
-    s[i] = s[i-1] + nums[i-1];
-}
-
-// l, r是指原数组下标区间
-// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r
-// s[l]  : [0, l-1]     0, 1, ..., l-1 , 
-// 相减                       [l, r]的和 ：l, ..., r                 
-int l_to_r_sum = s[r+1] - s[l];
-
-二维// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始
-
-// 算前缀和
-for (int i = 1; i &lt;= n; i++) {
-    for (int j = 1; j &lt;</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
-        <p class="h4 index-header">区间合并</p>
-      </a>
-
-      <a href="/2019/02/03/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">区间合并应用合并区间 思路：
-
-先对区间的左端点进行排序。
-
-如果上一个区间的右端点 大于等于 当前区间的左端点， 则合并两个区间；否则，当前区间作为一个新的区间加入新区间。
-
-
-
-新建一个数组保存区间
-
-class Solution {
-public:
-    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
-        vector&lt;vector&lt;int&gt;&gt; ans;
-        if (intervals.size() &lt;= 1) {
-            ans = intervals;
-            return ans;
-        }
-
-        sort(intervals.begin(), intervals.end());
-
-        ans.push_back(intervals[0]);
-        for (int i = 1; i &lt; intervals.si</div>
         </div>
       </a>
 
@@ -569,41 +568,42 @@ for (int i = 0; i &lt; n; i++) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-        <p class="h4 index-header">归并排序</p>
+      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
+        <p class="h4 index-header">前缀和 &amp; 差分</p>
       </a>
 
-      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+      <a href="/2019/02/03/%E5%89%8D%E7%BC%80%E5%92%8C&%E5%B7%AE%E5%88%86/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">归并排序算法归并排序均摊时间：O(nlogn) &amp; 空间：O(n)
-// const int N = 100010;
-// int t[N];
-void merge(int a[], int l, int mid, int r) {
-    int cnt = 0;  // 新数组t的长度
-    int i = l, j = mid + 1;
-    while (i &lt;= mid &amp;&amp; j &lt;= r) {
-        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];
-    }
-    while (i &lt;= mid) t[cnt++] = a[i++];
-    while (j &lt;= r) t[cnt++] = a[j++];
+          <div class="index-text mb-1">前缀和 &amp; 差分前缀和模板一维
+s[i] 表示前i个数[0, i)的累加和。 下标从1开始。 (s[0] == 0) dp的边界， 可以少些判断
+前缀和数组s下标从1开始， 原数组nums下标从0开始
 
-    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];
+// s[0] = 0
+for (int i = 1; i &lt;= n; i++) {
+    s[i] = s[i-1] + nums[i-1];
 }
 
-void merge_sort(int a[], int l, int r) {
-    if (l &gt;= r) return;
+// l, r是指原数组下标区间
+// s[r+1]: [0, r]       0, 1, ..., l-1 , l, ..., r
+// s[l]  : [0, l-1]     0, 1, ..., l-1 , 
+// 相减                       [l, r]的和 ：l, ..., r                 
+int l_to_r_sum = s[r+1] - s[l];
 
-    in</div>
+二维// s下标从1开始（第0行和第0列都置成0）， mat下标从0开始
+
+// 算前缀和
+for (int i = 1; i &lt;= n; i++) {
+    for (int j = 1; j &lt;</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-01&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-03&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -674,76 +674,48 @@ void merge_sort(int a[], int l, int r) {
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/12/19/Java%E9%9B%86%E5%90%88%E7%B1%BB%E6%80%BB%E7%BB%93/">
-        <p class="h4 index-header">Java集合类总结</p>
+      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+        <p class="h4 index-header">归并排序</p>
       </a>
 
-      <a href="/2018/12/19/Java%E9%9B%86%E5%90%88%E7%B1%BB%E6%80%BB%E7%BB%93/">
+      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">Java 刷题集合类快速查看
+          <div class="index-text mb-1">归并排序算法归并排序均摊时间：O(nlogn) &amp; 空间：O(n)
+// const int N = 100010;
+// int t[N];
+void merge(int a[], int l, int mid, int r) {
+    int cnt = 0;  // 新数组t的长度
+    int i = l, j = mid + 1;
+    while (i &lt;= mid &amp;&amp; j &lt;= r) {
+        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];
+    }
+    while (i &lt;= mid) t[cnt++] = a[i++];
+    while (j &lt;= r) t[cnt++] = a[j++];
 
+    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];
+}
 
+void merge_sort(int a[], int l, int r) {
+    if (l &gt;= r) return;
 
-类
-方法
-
-
-
-
-String
-charAt toCharArray split substring indexOf lastIndexOf replace length
-
-
-List
-add remove get size subList
-
-
-Stack
-push pop peek isEmpty size
-
-
-Queue
-offer poll peek isEmpty size
-
-
-PriorityQueue
-offer poll peek isEmpty size
-
-
-Set
-add remove contains isEmpty size first(TreeSet) last(TreeSet)
-
-
-Map
-put get getOrDefault containsKey containsValue keySet values isEmpty size
-
-
-
-
-静态数组 Static Array性质：初始化后长度不能变了
-初始化一维// Type[] names = new Type[capacity];
-int[] a = new int[</div>
+    in</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-19&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-01&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
           
-            <a href="/categories/Java">Java</a>&nbsp;
-          
-            <a href="/categories/%E9%9B%86%E5%90%88%E7%B1%BB">集合类</a>&nbsp;
-          
-            <a href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>&nbsp;
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
           &nbsp;
         
         
