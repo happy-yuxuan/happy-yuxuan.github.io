@@ -171,7 +171,7 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h2 id="洗牌"><a href="#洗牌" class="headerlink" title="洗牌"></a>洗牌</h2><p>分析洗牌算法正确性的准则：<strong>产生的结果必须有 n! 种可能</strong>，否则就是错误的。**这个很好解释，因为一个长度为 n 的数组的全排列就有 n! 种，也就是说打乱结果总共有 n! 种。算法必须能够反映这个事实，才是正确的。</p>
+            <h2 id="洗牌"><a href="#洗牌" class="headerlink" title="洗牌"></a>洗牌</h2><p>分析洗牌算法正确性的准则：<strong>产生的结果必须有 n! 种可能</strong>，否则就是错误的。这个很好解释，因为一个长度为 n 的数组的全排列就有 n! 种，也就是说打乱结果总共有 n! 种。算法必须能够反映这个事实，才是正确的。</p>
 <pre><code class="lang-c++">void shuffle(int[] arr) {
     int n = arr.length();
     for (int i = 0 ; i &lt; n; i++) {
@@ -181,7 +181,7 @@
 }
 </code></pre>
 <ul>
-<li>对于每一个位置来说当前都有<code>i+i</code>中选法，即第0个位置有n中可能（0到n-1有n个数），第二个位置有n-1种可能以此类推。最后就有n!种可能。</li>
+<li>对于每一个位置来说当前都有<code>n-i</code>种选法，即第0个位置有n中可能（0到n-1有n个数），第二个位置有n-1种可能以此类推。最后就有n!种可能。</li>
 </ul>
 <h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>洗牌算法，或者说随机乱置算法的<strong>正确性衡量标准是：对于每种可能的结果出现的概率必须相等，也就是说要足够随机。</strong></p>
 <ul>
