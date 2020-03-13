@@ -144,6 +144,58 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+        <p class="h4 index-header">层次遍历</p>
+      </a>
+
+      <a href="/2019/02/20/%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">二叉树层次遍历模板模板一：以每层为单位操作vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+    vector&lt;vector&lt;int&gt;&gt; ans;
+    if (!root) return ans;
+
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        int siz = q.size();  // 记录当前层有多少个节点
+        vector&lt;int&gt; level;
+        for (int i = 0; i &lt; siz; i++) {  // 让当前层的节点出队， 把下一层的节点放入队列中
+            auto t = q.front(); q.pop();
+            level.push_back(t-&gt;val);
+            if (t-&gt;left) q.push(t-&gt;left);</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%A0%91">树</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
         <p class="h4 index-header">拓扑排序</p>
       </a>
@@ -645,64 +697,6 @@ for (int i = 1; i &lt;= n; i++) {
 注意：partition返回的是j，而不是i。
 解释：partition 返回j的原因：partition假如以中点向下取整(l + r &gt;&gt; 1), 只剩下两个数的时候(如 1 2) 就会以左边的1为基准值x，i 和 j 最后会cross over，因为是do while循环， i会到2的位置， j会到1的位置。 这样左边(l, j)是小于等于1， 右边(i, r)是大于等于1.这样不会死循环。若返回i就会发生划分的左边死循环，一直是(1, 2)划分，无限递归下去。
 若要返回i， 跟二分很像，则需要以中点向上取整(l + r + 1 &gt;&gt; 1)。 同理，还是以数组剩下两个元素（1， 2）为例， 基准值x取2. 当i, j cross over之后， 左边小于等于2为(l, i - 1), </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-01&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-        <p class="h4 index-header">归并排序</p>
-      </a>
-
-      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">归并排序算法归并排序均摊时间：O(nlogn) &amp; 空间：O(n)
-// const int N = 100010;
-// int t[N];
-void merge(int a[], int l, int mid, int r) {
-    int cnt = 0;  // 新数组t的长度
-    int i = l, j = mid + 1;
-    while (i &lt;= mid &amp;&amp; j &lt;= r) {
-        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];
-    }
-    while (i &lt;= mid) t[cnt++] = a[i++];
-    while (j &lt;= r) t[cnt++] = a[j++];
-
-    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];
-}
-
-void merge_sort(int a[], int l, int r) {
-    if (l &gt;= r) return;
-
-    in</div>
         </div>
       </a>
 

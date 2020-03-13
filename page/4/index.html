@@ -144,6 +144,64 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+        <p class="h4 index-header">归并排序</p>
+      </a>
+
+      <a href="/2019/02/01/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">归并排序算法归并排序均摊时间：O(nlogn) &amp; 空间：O(n)
+// const int N = 100010;
+// int t[N];
+void merge(int a[], int l, int mid, int r) {
+    int cnt = 0;  // 新数组t的长度
+    int i = l, j = mid + 1;
+    while (i &lt;= mid &amp;&amp; j &lt;= r) {
+        t[cnt++] = a[i] &lt;= a[j] ? a[i++] : a[j++];
+    }
+    while (i &lt;= mid) t[cnt++] = a[i++];
+    while (j &lt;= r) t[cnt++] = a[j++];
+
+    for (int i = 0; i &lt; cnt; i++) a[l+i] = t[i];
+}
+
+void merge_sort(int a[], int l, int r) {
+    if (l &gt;= r) return;
+
+    in</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2018/12/19/Java%E9%9B%86%E5%90%88%E7%B1%BB%E6%80%BB%E7%BB%93/">
         <p class="h4 index-header">Java集合类总结</p>
       </a>
