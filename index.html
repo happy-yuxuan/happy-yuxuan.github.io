@@ -393,12 +393,12 @@ int dfs(int i, int j) {
     if (i == 0) return 0;
 
     int res = dfs(i - 1, j);
-    if (j &gt;= v[i]) res = max(res, dfs(i - 1, j - v[i]) + w[i]);
+    if (j - v[i] &gt;= 0) res = max(res, dfs(i - 1, j - v[i]) + w[i]);
 
     return res;
 }
 
-记忆化搜索// 返回选择</div>
+记忆化搜索// </div>
         </div>
       </a>
 
@@ -494,25 +494,27 @@ int dfs(int i, int j) {
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-Dijkstra（堆优化版子）T: O(mlogn)  S: O(n + m)
-#include &lt;bits/stdc++.h&gt;
+          <div class="index-text mb-1">最短路
+SPFA#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-typedef pair&lt;int, int&gt; PII;
-
 int n, m;
-vector&lt;vector&lt;PII&gt;&gt; g;
+vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; g;   // w id
 
-// 求 u 到 任何一点 的最短路
-int dijkstra(int u) {
+int spfa(int u) {
     vector&lt;int&gt; dist(n + 1, INT_MAX);
     vector&lt;bool&gt; used(n + 1, false);
-    // vector&lt;int&gt; prev(n + 1, -1);   初试话为-1
-    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; q;
-    q.push({0, u});
+    dist[u] = 0;
+
+    queue&lt;int&gt; q;
+    q.push(u);
+    used[u] = true;
     while (!q.empty()) {
-        PII t = q.top(); q.po</div>
+        int ver = q.front(); q.pop();
+        used[ver] = false;
+        for (auto &amp;e : g[ver]) {
+            int ne = e.second, w = e.first;
+            i</div>
         </div>
       </a>
 

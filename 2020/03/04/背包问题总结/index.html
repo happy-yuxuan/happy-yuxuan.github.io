@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.4k 字
+                    1.3k 字
                   </span>&nbsp;
                 
 
@@ -188,23 +188,22 @@ int dfs(int i, int j) {
     if (i == 0) return 0;
 
     int res = dfs(i - 1, j);
-    if (j &gt;= v[i]) res = max(res, dfs(i - 1, j - v[i]) + w[i]);
+    if (j - v[i] &gt;= 0) res = max(res, dfs(i - 1, j - v[i]) + w[i]);
 
     return res;
 }
 </code></pre>
 <h4 id="记忆化搜索"><a href="#记忆化搜索" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h4><pre><code class="lang-c++">// 返回选择前i件物品在背包为j容量的最大价值
 // memo 为 (n + 1) * (V + 1)的矩阵，初试值为-1
-int dfs(int i, int j, vector&lt;vector&lt;int&gt;&gt;&amp; memo) { 
+int dfs(int i, int j) {
     if (i == 0) return 0;
 
-    if (memo[i-1][j] == -1) memo[i-1][j] = dfs(i - 1, j, memo);
-    if (j &gt;= v[i] &amp;&amp; memo[i-1][j-v[i]] == -1) memo[i-1][j-v[i]] = dfs(i - 1, j - v[i], memo);
+    if (memo[i][j] != -1) return memo[i][j];   // 记忆化
 
-    memo[i][j] = memo[i-1][j];
-    if (j &gt;= v[i]) memo[i][j] = max(memo[i][j], memo[i-1][j-v[i]] + w[i]);
+    int ret = dfs(i - 1, j);
+    if (j - v[i] &gt;= 0) ret = max(ret, dfs(i-1, j-v[i]) + w[i]);
 
-    return memo[i][j];
+    return memo[i][j] = ret;
 }
 </code></pre>
 <h4 id="DP-自底向上"><a href="#DP-自底向上" class="headerlink" title="DP - 自底向上"></a>DP - 自底向上</h4><pre><code class="lang-c++">dp[0][0] = 0;
@@ -228,25 +227,26 @@ for (int i = 1; i &lt;= n; i++) {
 int dfs(int i, int j) {
     if (i == 0) return 0;
 
-    int res = 0;
-    for (int k = 0; k * v[i] &lt;= j; j++) {
-        res = max(res, dfs(i - 1, j - k * v[i]) + k * w[i]);
+    int ret = 0;
+    for (int k = 0; k * v[i] &lt;= j; k++) {
+        ret = max(ret, dfs(i-1, j-k*v[i]) + k*w[i]);
     }
 
     return res;
 }
 </code></pre>
 <h4 id="记忆化搜索-1"><a href="#记忆化搜索-1" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h4><pre><code class="lang-c++">// 选择前i个物品到背包容量为j的最大价值
-int dfs(int i, int j, vector&lt;vector&lt;int&gt;&gt;&amp; memo) {
+int dfs(int i, int j) {
     if (i == 0) return 0;
 
-    memo[i][j] = 0;
+    if (memo[i][j] != -1) return memo[i][j];  // 记忆化
+
+    int ret = 0;
     for (int k = 0; k * v[i] &lt;= j; k++) {
-        if (memo[i-1][j-k*v[i]] == -1) memo[i-1][j-k*v[i]] = dfs(i - 1, j - k * v[i], memo);
-        memo[i][j] = max(memo[i][j], memo[i-1][j-k*v[i]] + k*w[i]);
+        ret = max(ret, dfs(i-1, j-k*v[i]) + k*w[i]);
     }
 
-    return memo[i][j];
+    return memo[i][j] = ret;
 }
 </code></pre>
 <h4 id="DP-自底向上-1"><a href="#DP-自底向上-1" class="headerlink" title="DP - 自底向上"></a>DP - 自底向上</h4><pre><code class="lang-c++">for (int i = 1; i &lt;= n; i++) {
@@ -264,7 +264,8 @@ int dfs(int i, int j, vector&lt;vector&lt;int&gt;&gt;&amp; memo) {
 </code></pre><pre><code>② dp(i,j-v) = max(          dp(i-1, j-v),   dp(i-1,j-2v)+w, ...,  dp(i-1,j-kv)+(k-1)w)
 </code></pre><p><strong>联立①②：</strong></p>
 <pre><code>dp(i, j) = max( dp(i-1,j), dp(i,j-v)+w )
-</code></pre><p>PS: 跟0-1背包状态<strong>dp(i, j) = max(dp(i-1, j), dp(<code>i-1</code>, j-v[i]) + w[i])</strong> 只相差<code>i-1</code>部分, 更改0-1背包代码i-1变成i就行就行</p>
+</code></pre><p>PS: 跟0-1背包状态<strong>dp(i, j) = max(dp(i-1, j), dp(<code>i-1</code>, j-v[i]) + w[i])</strong> 只相差<code>i-1</code>部分</p>
+<p><strong>更改0-1背包代码i-1变成i就行就行</strong></p>
 <h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><pre><code>dp(i, j) 表示选前i件物品到背包容量为j的最大价值
 </code></pre><pre><code>dp(i, j) = max( dp(i-1, j-k*v[i])+k*w[i] ), k∈[0, min(s[i], j / v[i])]
 </code></pre><ul>

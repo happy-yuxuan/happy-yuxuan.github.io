@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    703 字
+                    887 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      3 分钟
+                      4 分钟
                   </span>&nbsp;
                 
 
@@ -171,7 +171,52 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p><img src="https://raw.githubusercontent.com/happy-yuxuan/picgo/master/img/image-20200127131950787.png" srcset="/img/loading.gif" alt=""></p>
+            <h1 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h1><p><img src="https://raw.githubusercontent.com/happy-yuxuan/picgo/master/img/image-20200127131950787.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h3><pre><code class="lang-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, m;
+vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; g;   // w id
+
+int spfa(int u) {
+    vector&lt;int&gt; dist(n + 1, INT_MAX);
+    vector&lt;bool&gt; used(n + 1, false);
+    dist[u] = 0;
+
+    queue&lt;int&gt; q;
+    q.push(u);
+    used[u] = true;
+    while (!q.empty()) {
+        int ver = q.front(); q.pop();
+        used[ver] = false;
+        for (auto &amp;e : g[ver]) {
+            int ne = e.second, w = e.first;
+            if (dist[ne] &gt; dist[ver] + w) {
+                dist[ne] = dist[ver] + w;
+                if (!used[ne]) {
+                    used[ne] = true;
+                    q.push(ne);
+                }
+            }
+        }
+    }
+    if (dist[n] == INT_MAX) return -1;
+    return dist[n];
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    g = vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt;(n + 1);
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
+        g[a].push_back({c, b});
+    }
+    int ans = spfa(1);
+    printf(&quot;%d&quot;, ans);
+    return 0;
+}
+</code></pre>
 <h3 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h3><p>（堆优化版子）<code>T: O(mlogn)  S: O(n + m)</code></p>
 <pre><code class="lang-c++">#include &lt;bits/stdc++.h&gt;
 using namespace std;
