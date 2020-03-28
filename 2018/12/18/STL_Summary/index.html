@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.8k 字
+                    1.9k 字
                   </span>&nbsp;
                 
 
@@ -338,7 +338,7 @@ Node n1(1, 2);
 <ul>
 <li>为什么重载&lt;号要这样写，而不写成<code>return a.p1 &lt; b.p1 || a.p1 == b.p1 &amp;&amp; a.p2 &lt; b.p2</code>？因为p1和p2是int，他们虽然有重载<code>==</code>。但是对于没有重载<code>==</code>来说,只须重载小于运算符. <a href="https://blog.csdn.net/dpfordor/article/details/1958077" target="_blank" rel="noopener">参考文献</a></li>
 </ul>
-<h2 id="堆之标准比较器构造-对于指针来说可以使用"><a href="#堆之标准比较器构造-对于指针来说可以使用" class="headerlink" title="堆之标准比较器构造 (对于指针来说可以使用)"></a>堆之标准比较器构造 (对于指针来说可以使用)</h2><pre><code class="lang-c++">
+<h2 id="堆之标准比较器构造-对于指针来说可以使用，比较器是反的"><a href="#堆之标准比较器构造-对于指针来说可以使用，比较器是反的" class="headerlink" title="堆之标准比较器构造 (对于指针来说可以使用，比较器是反的)"></a>堆之标准比较器构造 (对于指针来说可以使用，比较器是反的)</h2><pre><code class="lang-c++">
 typedef pair&lt;string, int&gt; Node;
 typedef function&lt;bool(const Node&amp;, const Node&amp;)&gt; Compare;
 
@@ -348,8 +348,8 @@ int main()
 
     Compare comparator = [](const Node&amp; a, const Node&amp; b) {
         if (a.second == b.second)
-            return a.first &lt; b.first;    // order by alphabet  ASC
-        return a.second &gt; b.second;    // order by freq DESC
+            return a.first &lt; b.first;   
+        return a.second &gt; b.second;   
     };
 
     // Min heap by frequency
@@ -364,7 +364,7 @@ int main()
 
 
     Compare cmp = [](const ListNode *a, const ListNode *b) {
-            return a-&gt;val &gt; b-&gt;val;
+            return a-&gt;val &lt; b-&gt;val;
     };
     // 大根堆
     priority_queue&lt;ListNode*, vector&lt;ListNode*&gt;, Compare&gt; q(cmp);
@@ -471,6 +471,16 @@ for (auto rit = mp.rbegin(); rit != mp.rend(); ) {
         mp.erase(--(rit.base()));  // c++ 11可以使用 mp.erase(next(rit).base());
     else 
         rit++;
+}
+</code></pre>
+<h2 id="String查找字符串"><a href="#String查找字符串" class="headerlink" title="String查找字符串"></a>String查找字符串</h2><pre><code class="lang-c++">string s1 = &quot;abcd&quot;;
+string s2 = &quot;ab&quot;;
+
+// 判断s1中是否有s2
+if (s1.find(s2) == std::string::npos) {
+    // 没有找到
+} else{
+    // 找到了
 }
 </code></pre>
 
