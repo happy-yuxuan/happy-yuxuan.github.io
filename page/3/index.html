@@ -196,6 +196,64 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
+        <p class="h4 index-header">单调栈</p>
+      </a>
+
+      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">单调栈算法思想：
+维护一个具有单调性质的栈， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。
+
+经典例题单调栈
+只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。
+
+for (int i = 0; i &lt; n; i++) {
+    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {
+        stk.pop();
+    }
+    if (stk.empty()) {   // 左边没有比他小的元素
+        printf(&quot;-1 &quot;);
+    } else {   // 栈顶元素是第一个比他小的数
+        printf(&quot;%d &quot;, stk.top());
+    }
+    stk.push(nums[i]);
+}
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
         <p class="h4 index-header">拓扑排序</p>
       </a>
@@ -242,64 +300,6 @@ bool topsort() {
             <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
           
             <a href="/categories/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
-        <p class="h4 index-header">单调栈</p>
-      </a>
-
-      <a href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">单调栈算法思想：
-维护一个具有单调性质的栈， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。
-
-经典例题单调栈
-只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。
-
-for (int i = 0; i &lt; n; i++) {
-    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {
-        stk.pop();
-    }
-    if (stk.empty()) {   // 左边没有比他小的元素
-        printf(&quot;-1 &quot;);
-    } else {   // 栈顶元素是第一个比他小的数
-        printf(&quot;%d &quot;, stk.top());
-    }
-    stk.push(nums[i]);
-}
-
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-05&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
           &nbsp;
         
         

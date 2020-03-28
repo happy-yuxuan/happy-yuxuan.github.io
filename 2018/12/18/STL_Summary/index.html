@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      8 分钟
+                      9 分钟
                   </span>&nbsp;
                 
 
@@ -481,6 +481,15 @@ if (s1.find(s2) == std::string::npos) {
     // 没有找到
 } else{
     // 找到了
+}
+</code></pre>
+<h2 id="map迭代访问"><a href="#map迭代访问" class="headerlink" title="map迭代访问"></a>map迭代访问</h2><pre><code class="lang-c++">unordered_map&lt;char, int&gt; mp;
+
+for (auto&amp; [key, value] : mp) { }  
+
+for (auto&amp; kv : mp) {
+    char key = kv.first;
+    int value = kv.second;
 }
 </code></pre>
 
