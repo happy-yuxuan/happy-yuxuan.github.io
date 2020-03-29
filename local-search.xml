@@ -8,7 +8,7 @@
     <link href="/2020/03/13/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%8E%8B%E7%BC%A9%E5%9D%90%E6%A0%87/"/>
     <url>/2020/03/13/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%8E%8B%E7%BC%A9%E5%9D%90%E6%A0%87/</url>
     
-    <content type="html"><![CDATA[<h1 id="使用位运算压缩坐标-x-y-的技巧以及背后原理"><a href="#使用位运算压缩坐标-x-y-的技巧以及背后原理" class="headerlink" title="使用位运算压缩坐标(x, y)的技巧以及背后原理"></a>使用位运算压缩坐标(x, y)的技巧以及背后原理</h1><ul><li>把一个<code>int型</code>坐标(x, y)转换成一个<code>long long类型</code>的整数，方便存储位置状态。</li></ul><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>假如题目给了很多坐标，需要保存坐标的唯一标识，从而表示坐标的状态信息。</p><ul><li><p>因为坐标是int型是32位的(64位机)，而long long类型是64位的。 所以可以让高的32保存x的坐标，低32位保存y的坐标。</p></li><li><p>在编码(encode)的使用，先把x坐标和y坐标转换成long long类型，并向左移32位(左移补0)。然后用把当前数按位或y坐标。得到低32位是y，高32位是x。</p></li><li>在解码(decode)的时候，获得y坐标直接把编码后的数point强制类型转换成int(强制类型转换直接取低32位)。取x坐标要先把point右移32位再强制类型转换获得x坐标。</li></ul><p><em>PS：假如坐标有负数，需要在encode的时候需要在强转后把y的前32位置成0，因为负数int强制类型转换成long long高32位会补1(正数补0，计算机保存的是数的补码，整数的补码跟本身一样，负数的补码要取反+1)增加<code>y &amp;= 0x00000000ffffffff;</code> 把高32位置0， 这样按位或就能保存x的值了。</em></p><p>举一个栗子：<br><code>x = 60, y = -32760</code> 计算机<strong>补码</strong>保存如下：</p><p><code>x = 0000 0000 0000 0000 0000 0000 0011 1100</code><br><code>y = 1111 1111 1111 1111 1000 0000 0000 1000</code><br>强制类型转换成long long类型64位<br><code>x = 00000000000000000000000000000000 0000 0000 0000 0000 0000 0000 0011 1100</code><br><code>y = 11111111111111111111111111111111 1111 1111 1111 1111 1000 0000 0000 1000</code><br>按位与</p><p>x: <code>0000 0000 0000 0000 0000 0000 0011 1100</code> <code>0000 0000 0000 0000 0000 0000 0000 0000</code> (x右移32位)<br>y: <code>0000 0000 0000 0000 0000 0000 0000 0000</code> <code>1111 1111 1111 1111 1000 0000 0000 1000</code> (把y的高32位置成0)</p><p>p: <code>0000 0000 0000 0000 0000 0000 0011 1100</code> <code>1111 1111 1111 1111 1000 0000 0000 1000</code></p><p>p为压缩后的坐标。</p><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>由<code>encode</code>和<code>decode</code>方法</p><h4 id="encode"><a href="#encode" class="headerlink" title="encode"></a>encode</h4><pre><code class="lang-c++">long long encode(long long x, long long y) {    y &amp;= 0x00000000ffffffff;  // 若y &gt; 0可以不写    return x &lt;&lt; 32 | y;}</code></pre><h4 id="decode"><a href="#decode" class="headerlink" title="decode"></a>decode</h4><pre><code class="lang-c++">pair&lt;int, int&gt; decode(long long point) {    return {(int)(point &gt;&gt; 32), (int)point};}</code></pre><h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><pre><code class="lang-c++">// 使用例子， 把坐标放到各个容器中，以queue为例queue&lt;long long&gt; q;int x = 299, y = -40;  // (x, y) == (299, -40)q.push(encode(x, y);  // 把坐标状态压入队列pair&lt;int, int&gt; point = decode(q.top());   // 取出状态还原坐标 // point.first == 299,   point.second == -40</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="使用位运算压缩坐标-x-y-的技巧以及背后原理"><a href="#使用位运算压缩坐标-x-y-的技巧以及背后原理" class="headerlink" title="使用位运算压缩坐标(x, y)的技巧以及背后原理"></a>使用位运算压缩坐标(x, y)的技巧以及背后原理</h1><ul><li>把一个<code>int型</code>坐标(x, y)转换成一个<code>long long类型</code>的整数，方便存储位置状态。</li></ul><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>假如题目给了很多坐标，需要保存坐标的唯一标识，从而表示坐标的状态信息。</p><ul><li><p>因为坐标是int型是32位的(64位机)，而long long类型是64位的。 所以可以让高的32保存x的坐标，低32位保存y的坐标。</p></li><li><p>在编码(encode)的使用，先把x坐标和y坐标转换成long long类型，并向左移32位(左移补0)。然后用把当前数按位或y坐标。得到低32位是y，高32位是x。</p></li><li>在解码(decode)的时候，获得y坐标直接把编码后的数point强制类型转换成int(强制类型转换直接取低32位)。取x坐标要先把point右移32位再强制类型转换获得x坐标。</li></ul><p><em>PS：假如坐标有负数，需要在encode的时候需要在强转后把y的前32位置成0，因为负数int强制类型转换成long long高32位会补1(正数补0，计算机保存的是数的补码，整数的补码跟本身一样，负数的补码要取反+1)增加<code>y &amp;= 0x00000000ffffffff;</code> 把高32位置0， 这样按位或就能保存x的值了。</em></p><p>举一个栗子：<br><code>x = 60, y = -32760</code> 计算机<strong>补码</strong>保存如下：</p><p><code>x = 0000 0000 0000 0000 0000 0000 0011 1100</code><br><code>y = 1111 1111 1111 1111 1000 0000 0000 1000</code><br>强制类型转换成long long类型64位<br><code>x = 00000000000000000000000000000000 0000 0000 0000 0000 0000 0000 0011 1100</code><br><code>y = 11111111111111111111111111111111 1111 1111 1111 1111 1000 0000 0000 1000</code><br>按位与</p><p>x: <code>0000 0000 0000 0000 0000 0000 0011 1100</code> <code>0000 0000 0000 0000 0000 0000 0000 0000</code> (x右移32位)<br>y: <code>0000 0000 0000 0000 0000 0000 0000 0000</code> <code>1111 1111 1111 1111 1000 0000 0000 1000</code> (把y的高32位置成0)</p><p>p: <code>0000 0000 0000 0000 0000 0000 0011 1100</code> <code>1111 1111 1111 1111 1000 0000 0000 1000</code></p><p>p为压缩后的坐标。</p><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>由<code>encode</code>和<code>decode</code>方法</p><h4 id="encode"><a href="#encode" class="headerlink" title="encode"></a>encode</h4><pre><code class="lang-c++">long long encode(long long x, long long y) {    y &amp;= 0x00000000ffffffff;  // 若y &gt; 0可以不写    return x &lt;&lt; 32 | y;}</code></pre><h4 id="decode"><a href="#decode" class="headerlink" title="decode"></a>decode</h4><pre><code class="lang-c++">pair&lt;int, int&gt; decode(long long point) {    return {(int)(point &gt;&gt; 32), (int)point};}</code></pre><h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><pre><code class="lang-c++">// 使用例子， 把坐标放到各个容器中，以queue为例queue&lt;long long&gt; q;int x = 299, y = -40;  // (x, y) == (299, -40)q.push(encode(x, y);  // 把坐标状态压入队列pair&lt;int, int&gt; point = decode(q.front());   // 取出状态还原坐标 // point.first == 299,   point.second == -40</code></pre>]]></content>
     
     
     <categories>
@@ -581,18 +581,18 @@
   
   
   <entry>
-    <title>单调栈</title>
-    <link href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/"/>
-    <url>/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/</url>
+    <title>拓扑排序</title>
+    <link href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/"/>
+    <url>/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</url>
     
-    <content type="html"><![CDATA[<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><ul><li>维护一个具有<strong>单调性质的栈</strong>， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。</li></ul><h3 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h3><h4 id="单调栈-1"><a href="#单调栈-1" class="headerlink" title="单调栈"></a><a href="https://www.acwing.com/problem/content/832/" target="_blank" rel="noopener">单调栈</a></h4><ul><li>只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。</li></ul><pre><code class="lang-c++">for (int i = 0; i &lt; n; i++) {    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {        stk.pop();    }    if (stk.empty()) {   // 左边没有比他小的元素        printf(&quot;-1 &quot;);    } else {   // 栈顶元素是第一个比他小的数        printf(&quot;%d &quot;, stk.top());    }    stk.push(nums[i]);}</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><h3 id="算法思想：bfs"><a href="#算法思想：bfs" class="headerlink" title="算法思想：bfs"></a>算法思想：bfs</h3><ul><li>把所有入度为0的点全部放入队列。</li><li>只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。</li><li>把每个入度被减成0的节点放入队列</li></ul><pre><code class="lang-c++">/*     n 节点个数，下标从1开始    graph 邻接表    inD 每个节点的入度    ans 保存拓扑序*/bool topsort() {    queue&lt;int&gt; q;    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列        if (inD[i] == 0)            q.push(i);    while (!q.empty()) {        int t = q.front(); q.pop();  // 拿一个入度为0的点        ans.push_back(t);        for (int v : graph[t])  // 把以该点t为入度的点的入度减一            if (--inD[v] == 0)                 q.push(v);  // 若减成0，则入队    }    return ans.size() == n;  // 若全部节点都被访问才说明有 拓扑序}</code></pre>]]></content>
     
     
     <categories>
       
       <category>算法</category>
       
-      <category>数据结构</category>
+      <category>图论</category>
       
     </categories>
     
@@ -608,18 +608,18 @@
   
   
   <entry>
-    <title>拓扑排序</title>
-    <link href="/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/"/>
-    <url>/2019/02/05/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</url>
+    <title>单调栈</title>
+    <link href="/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/"/>
+    <url>/2019/02/05/%E5%8D%95%E8%B0%83%E6%A0%88/</url>
     
-    <content type="html"><![CDATA[<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><h3 id="算法思想：bfs"><a href="#算法思想：bfs" class="headerlink" title="算法思想：bfs"></a>算法思想：bfs</h3><ul><li>把所有入度为0的点全部放入队列。</li><li>只要有入度为0的节点（队列不为空）则把该点输出，并把以该点t为入度的所有节点的入度减一。</li><li>把每个入度被减成0的节点放入队列</li></ul><pre><code class="lang-c++">/*     n 节点个数，下标从1开始    graph 邻接表    inD 每个节点的入度    ans 保存拓扑序*/bool topsort() {    queue&lt;int&gt; q;    for (int i = 1; i &lt;= n; i++) // 把所有入度为0的点全部加进队列        if (inD[i] == 0)            q.push(i);    while (!q.empty()) {        int t = q.front(); q.pop();  // 拿一个入度为0的点        ans.push_back(t);        for (int v : graph[t])  // 把以该点t为入度的点的入度减一            if (--inD[v] == 0)                 q.push(v);  // 若减成0，则入队    }    return ans.size() == n;  // 若全部节点都被访问才说明有 拓扑序}</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><h3 id="算法思想："><a href="#算法思想：" class="headerlink" title="算法思想："></a>算法思想：</h3><ul><li>维护一个具有<strong>单调性质的栈</strong>， 因为有一些答案永远不会成为答案，所以把其覆盖掉，并使得栈单调， 即可以使用单调栈。</li></ul><h3 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h3><h4 id="单调栈-1"><a href="#单调栈-1" class="headerlink" title="单调栈"></a><a href="https://www.acwing.com/problem/content/832/" target="_blank" rel="noopener">单调栈</a></h4><ul><li>只要当数小于等于栈顶元素， 则栈顶元素不可能是答案， 因为当前数比栈顶元素小。所以出栈出到第一个比当前数小的数为止，该数为第一个比当前nums[i]小的数。记得把nums[i]插入栈顶作为新的一轮。</li></ul><pre><code class="lang-c++">for (int i = 0; i &lt; n; i++) {    while (!stk.empty() &amp;&amp; nums[i] &lt;= stk.top()) {        stk.pop();    }    if (stk.empty()) {   // 左边没有比他小的元素        printf(&quot;-1 &quot;);    } else {   // 栈顶元素是第一个比他小的数        printf(&quot;%d &quot;, stk.top());    }    stk.push(nums[i]);}</code></pre>]]></content>
     
     
     <categories>
       
       <category>算法</category>
       
-      <category>图论</category>
+      <category>数据结构</category>
       
     </categories>
     
