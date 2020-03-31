@@ -144,6 +144,65 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_WebKit/">
+        <p class="h4 index-header">App界面 - WebKit</p>
+      </a>
+
+      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_WebKit/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">App界面 - WebKit一句话作用：把网页url加载到手机上。
+Web基础
+UIWebViewiOS12后弃用。内存系统泄漏，稳定差，WebCore和JSCore Crash较多，对HTML5和CSS3支持较少。
+WebKit
+独立进程，内存。 Crash不影响主App，更多更友好的HTML和CSS支持，采用JIT技术
+
+是一个开源的Web浏览器引擎
+
+iOS中的WebKit.framework就是在WebCore、底层桥接、JSCore引擎等核心模块的基础上，针对iOS平台的项目封装。
+
+WKWebView// 在view中添加一个webView
+[self.view addSubview:({
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(...)];
+    self.webview;
+})];
+
+// webView加载网页
+[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;htt</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
+          
+            <a href="/categories/WebKit">WebKit</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_%E5%8A%A8%E7%94%BB/">
         <p class="h4 index-header">App界面 - 动画</p>
       </a>
@@ -670,64 +729,6 @@ for (int i = 0; i &lt; n; i++) {
             <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
           
             <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
-        <p class="h4 index-header">非递归前中后遍历总结</p>
-      </a>
-
-      <a href="/2019/02/20/%E5%89%8D%E4%B8%AD%E5%90%8E%E9%81%8D%E5%8E%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">非递归前中后遍历总结
-对于一个二叉树而言，前中后遍历分别对应第1，2，3次访问该节点。如在第一次访问该节点输出就是前序遍历，第二次访问该节点就是中序遍历，第三次访问该节点就是后序遍历。 在网上找到一张有意思的图。
-
-
-用中序遍历的思想实现前后遍历(常用遍历技巧)
-前序遍历vector&lt;int&gt; preorderTraversal(TreeNode* root) {
-    vector&lt;int&gt; ans;
-
-    stack&lt;TreeNode*&gt; stk;
-    auto p = root;
-    while (p || !stk.empty()) {
-        while (p) {
-            ans.push_back(p-&gt;val);  // 前序遍历 ①
-            stk.push(p);
-            p = p-&gt;left;
-        }
-        p = stk.top(); stk.pop();    
-        p = p-&gt;right;
-    </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-20&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>&nbsp;
-          
-            <a href="/categories/%E6%A0%91">树</a>&nbsp;
           &nbsp;
         
         

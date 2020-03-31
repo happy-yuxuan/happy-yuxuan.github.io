@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>iOS静态库总结</title>
+    <link href="/2020/03/31/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%80%BB%E7%BB%93/"/>
+    <url>/2020/03/31/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<h1 id="iOS静态库使用总结"><a href="#iOS静态库使用总结" class="headerlink" title="iOS静态库使用总结"></a>iOS静态库使用总结</h1><h2 id="总体流程"><a href="#总体流程" class="headerlink" title="总体流程"></a>总体流程</h2><ol><li>创建Cocoa Touch Static Library 实现对应的逻辑</li><li>设置暴露的头文件</li><li>模拟器和真机分别编译。 （分release和debug，可以在Edit Scheme中 Build Configuration中选择debug或者release,对外提供的framework尽量是relese版本）</li><li>合并静态库 <code>lipo -create xx1.a x2.a -output xx3.a</code> （把静态库xx1和xx2，合并成一个 xx3静态库）</li></ol><ul><li>静态库是iOS中资源打包的方式  <code>.a</code>文件 （在Product文件夹中）</li><li>需要手动引入头文件使用</li><li>一般要设置Other Linker Flags 等</li></ul><h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><ul><li>因为静态库<code>.a</code>文件是一个二进制文件，需要在Target-Build Phases-Copy Files中添加对应的头文件。编译之后，会在Product include文件夹中得到暴露的头文件，配合二进制的文件，使用者就可以使用静态库</li><li>每次编译的时候会在Product文件生成<code>.a</code>。真机和模拟器的架构不一样，需要分别编译然后合成成一个来方便调试（第四步）。但是在上线项目是不需要打包模拟器版本的，原因是减伤包的体积。</li></ul><h2 id="使用静态库流程"><a href="#使用静态库流程" class="headerlink" title="使用静态库流程"></a>使用静态库流程</h2><ol><li>在项目创建一个Group（文件夹），想添加普通文件一样把静态库<code>.a</code>和其对应的头文件添加入Group中<ul><li>（右键点击Show in finder, 先把文件拖入finder中文件夹，回到Xcode中 Add Files to “<GroupName>“ .）</li></ul></li><li>重新编译项目</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>iOS</category>
+      
+      <category>静态库</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>位运算压缩坐标(x, y)的技巧以及背后原理</title>
     <link href="/2020/03/13/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%8E%8B%E7%BC%A9%E5%9D%90%E6%A0%87/"/>
     <url>/2020/03/13/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%8E%8B%E7%BC%A9%E5%9D%90%E6%A0%87/</url>

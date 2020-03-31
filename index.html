@@ -144,6 +144,59 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/31/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%80%BB%E7%BB%93/">
+        <p class="h4 index-header">iOS静态库总结</p>
+      </a>
+
+      <a href="/2020/03/31/iOS%E9%9D%99%E6%80%81%E5%BA%93%E6%80%BB%E7%BB%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">iOS静态库使用总结总体流程
+创建Cocoa Touch Static Library 实现对应的逻辑
+设置暴露的头文件
+模拟器和真机分别编译。 （分release和debug，可以在Edit Scheme中 Build Configuration中选择debug或者release,对外提供的framework尽量是relese版本）
+合并静态库 lipo -create xx1.a x2.a -output xx3.a （把静态库xx1和xx2，合并成一个 xx3静态库）
+
+
+静态库是iOS中资源打包的方式  .a文件 （在Product文件夹中）
+需要手动引入头文件使用
+一般要设置Other Linker Flags 等
+
+PS
+因为静态库.a文件是一个二进制文件，需要在Target-Build Phases-Copy Files中添加对应的头文件。编译之后，会在Product include文件夹中得到暴露的头文件，配合二进制的文件，使用者就可以使用静态库
+每次编译的时候会在Product文件生成.a。真机和模拟器的架构不一样，需要分别编译然后合成成一个来方便调试（第四步）。但是</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/iOS">iOS</a>&nbsp;
+          
+            <a href="/categories/%E9%9D%99%E6%80%81%E5%BA%93">静态库</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2020/03/13/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%8E%8B%E7%BC%A9%E5%9D%90%E6%A0%87/">
         <p class="h4 index-header">位运算压缩坐标(x, y)的技巧以及背后原理</p>
       </a>
@@ -647,65 +700,6 @@ Http Header：请求和相应的补充信息。 长度、编码类型、压缩�
             <a href="/categories/iOS">iOS</a>&nbsp;
           
             <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_WebKit/">
-        <p class="h4 index-header">App界面 - WebKit</p>
-      </a>
-
-      <a href="/2020/03/03/App%E7%95%8C%E9%9D%A2_WebKit/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">App界面 - WebKit一句话作用：把网页url加载到手机上。
-Web基础
-UIWebViewiOS12后弃用。内存系统泄漏，稳定差，WebCore和JSCore Crash较多，对HTML5和CSS3支持较少。
-WebKit
-独立进程，内存。 Crash不影响主App，更多更友好的HTML和CSS支持，采用JIT技术
-
-是一个开源的Web浏览器引擎
-
-iOS中的WebKit.framework就是在WebCore、底层桥接、JSCore引擎等核心模块的基础上，针对iOS平台的项目封装。
-
-WKWebView// 在view中添加一个webView
-[self.view addSubview:({
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(...)];
-    self.webview;
-})];
-
-// webView加载网页
-[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;htt</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/iOS">iOS</a>&nbsp;
-          
-            <a href="/categories/%E5%9F%BA%E7%A1%80">基础</a>&nbsp;
-          
-            <a href="/categories/WebKit">WebKit</a>&nbsp;
           &nbsp;
         
         
