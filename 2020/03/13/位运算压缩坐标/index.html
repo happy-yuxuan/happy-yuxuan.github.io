@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    599 字
+                    693 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      2 分钟
+                      3 分钟
                   </span>&nbsp;
                 
 
@@ -189,8 +189,8 @@
 <p>p: <code>0000 0000 0000 0000 0000 0000 0011 1100</code> <code>1111 1111 1111 1111 1000 0000 0000 1000</code></p>
 <p>p为压缩后的坐标。</p>
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>由<code>encode</code>和<code>decode</code>方法</p>
-<h4 id="encode"><a href="#encode" class="headerlink" title="encode"></a>encode</h4><pre><code class="lang-c++">long long encode(long long x, long long y) {
-    y &amp;= 0x00000000ffffffff;  // 若y &gt; 0可以不写
+<h4 id="encode"><a href="#encode" class="headerlink" title="encode"></a>encode</h4><pre><code class="lang-c++">// 都是正数（比如坐标）
+long long encode(long long x, long long y) {
     return x &lt;&lt; 32 | y;
 }
 </code></pre>
@@ -206,6 +206,20 @@ q.push(encode(x, y);  // 把坐标状态压入队列
 
 pair&lt;int, int&gt; point = decode(q.front());   // 取出状态还原坐标 
 // point.first == 299,   point.second == -40
+</code></pre>
+<p>PS：<br>x, y有可能是负数的encode方式要发生一些变化</p>
+<pre><code class="lang-c++">// x, y有可能是负数
+long long encode(long long x, long long y) {
+    y &amp;= 0x00000000ffffffff;   // 去掉高32位的1，负数强转是补1
+    if (x &lt; 0) {   // 因为负数的左移操作没有意义，所以将x转成正数移位做
+        x = -x;
+        x &lt;&lt;= 32;
+        x = -x;
+    } else {
+        x &lt;&lt;= 32;
+    }
+    return x | y;
+}
 </code></pre>
 
             <hr>
