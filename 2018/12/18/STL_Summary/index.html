@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.9k 字
+                    2k 字
                   </span>&nbsp;
                 
 
@@ -285,7 +285,15 @@ double f_double = stod(f);   //转换回double  23.43
 <h2 id="memset"><a href="#memset" class="headerlink" title="memset"></a>memset</h2><p>只能做这3个值<br>每4个字节赋值， Ox3f3f3f3f 大约是10^9次方多一点点</p>
 <pre><code class="lang-c++">memset(h, -1, sizeof h);
 memset(h, 0, sizeof h);
-memset(h, 0x3f, sizeof h);  // memset这个函数是按字节来赋值的，int有4个字节，所以把每个字节都赋值成0x3f以后就是0x3f3f3f3f。
+memset(h, 0x3f, sizeof h);  // memset这个函数是按字节来赋值的，int有4个字节，所以把每个字节都赋值成0x3f以后就是0x3f3f3f3f。  大于10的9次方
+memset(h, 0xc0, sizeof h);  // memset这个函数是按字节来赋值的，int有4个字节，所以把每个字节都赋值成0x3f以后就是0xc0c0c0c0。
+
+// &quot;较&quot;: 相加不溢出
+较大值：0x3f  // 16进制(0x3f3f3f3f) = 10进制(1061109567) &gt; 1e9
+较小值：0xc0  // 16进制(0xc0c0c0c0) = 10进制(-1061109568) &gt; -1e9
+
+最大值：0x7f // 16进制(0x7f7f7f7f) = 10进制(2139062143)
+最小值：0x80 // 16进制(0x80808080) = 10进制(-2139062144)
 </code></pre>
 <h2 id="sort的比较函数的几种写法-（默认从小到大）"><a href="#sort的比较函数的几种写法-（默认从小到大）" class="headerlink" title="sort的比较函数的几种写法 （默认从小到大）"></a>sort的比较函数的几种写法 （默认从小到大）</h2><pre><code class="lang-c++">// 对vector排序
 sort(v.begin(), v.end(), [](const int&amp; a, const int&amp; b){return a &gt; b;});
