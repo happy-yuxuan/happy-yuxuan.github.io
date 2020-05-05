@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    2k 字
+                    2.1k 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      9 分钟
+                      10 分钟
                   </span>&nbsp;
                 
 
@@ -257,11 +257,15 @@
 </tbody>
 </table>
 </div>
-<h1 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h1><h2 id="保留几位小数"><a href="#保留几位小数" class="headerlink" title="保留几位小数"></a>保留几位小数</h2><pre><code class="lang-c++">printf(&quot;%.6f&quot;, k);  // 保留6位小数   (double - printf - %f) (doubel - scanf - %lf)
+<h1 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h1><h2 id="输出保留小数"><a href="#输出保留小数" class="headerlink" title="输出保留小数"></a>输出保留小数</h2><pre><code class="lang-c++">printf(&quot;%.6f&quot;, k);  // 保留6位小数   (double - printf - %f) (doubel - scanf - %lf)
 </code></pre>
-<h2 id="输入字符串包括空格"><a href="#输入字符串包括空格" class="headerlink" title="输入字符串包括空格"></a>输入字符串包括空格</h2><pre><code class="lang-c++">getline(cin,str);   // str 为 string
+<h2 id="cin以回车分隔"><a href="#cin以回车分隔" class="headerlink" title="cin以回车分隔"></a>cin以回车分隔</h2><pre><code class="lang-c++">getline(cin,str);   // str 为 string
 </code></pre>
-<h2 id="输入直到文字流结束-（ctrl-z）"><a href="#输入直到文字流结束-（ctrl-z）" class="headerlink" title="输入直到文字流结束 （ctrl + z）"></a>输入直到文字流结束 （ctrl + z）</h2><pre><code class="lang-c++">// scanf
+<h2 id="cin优化"><a href="#cin优化" class="headerlink" title="cin优化"></a>cin优化</h2><pre><code class="lang-c++">// 两句话一起写
+ios::sync_with_stdio(false);
+cin.tie(0);
+</code></pre>
+<h2 id="EOF"><a href="#EOF" class="headerlink" title="EOF"></a>EOF</h2><pre><code class="lang-c++">// scanf
 while (scanf(&quot;%d %d&quot;,&amp;a, &amp;b) != EOF) {
     printf(&quot;%d\n&quot;, a + b);
 }
@@ -271,8 +275,11 @@ while (!cin.eof()) {
     cin &gt;&gt; a &gt;&gt; b;
     cout &lt;&lt; a + b &lt;&lt; endl;
 }
+
+// ctrl + z 结束
 </code></pre>
-<h2 id="to-string-函数-把数字转成字符串的相互转换，负数也可以"><a href="#to-string-函数-把数字转成字符串的相互转换，负数也可以" class="headerlink" title="to_string() 函数 (把数字转成字符串的相互转换，负数也可以)"></a>to_string() 函数 (把数字转成字符串的相互转换，负数也可以)</h2><pre><code class="lang-c++">double f = 23.43
+<h2 id="to-string"><a href="#to-string" class="headerlink" title="to_string()"></a>to_string()</h2><pre><code class="lang-c++">// 把数字转成字符串的相互转换，负数也可以
+double f = 23.43
 string f_str = to_string(f);    // 23.430000
 
 double f_double = stod(f);   //转换回double  23.43
@@ -282,7 +289,7 @@ double f_double = stod(f);   //转换回double  23.43
 <li>pair对于排序来说是以first为第一关键字排序， second为第二关键字排序</li>
 <li>赋值的时候可以使用花括号代替<code>{1, 2}</code></li>
 </ul>
-<h2 id="memset"><a href="#memset" class="headerlink" title="memset"></a>memset</h2><p>只能做这3个值<br>每4个字节赋值， Ox3f3f3f3f 大约是10^9次方多一点点</p>
+<h2 id="memset"><a href="#memset" class="headerlink" title="memset"></a>memset</h2><p>每4个字节赋值， Ox3f3f3f3f 大约是10^9次方多一点点</p>
 <pre><code class="lang-c++">memset(h, -1, sizeof h);
 memset(h, 0, sizeof h);
 memset(h, 0x3f, sizeof h);  // memset这个函数是按字节来赋值的，int有4个字节，所以把每个字节都赋值成0x3f以后就是0x3f3f3f3f。  大于10的9次方
@@ -295,19 +302,29 @@ memset(h, 0xc0, sizeof h);  // memset这个函数是按字节来赋值的，int�
 最大值：0x7f // 16进制(0x7f7f7f7f) = 10进制(2139062143)
 最小值：0x80 // 16进制(0x80808080) = 10进制(-2139062144)
 </code></pre>
-<h2 id="sort的比较函数的几种写法-（默认从小到大）"><a href="#sort的比较函数的几种写法-（默认从小到大）" class="headerlink" title="sort的比较函数的几种写法 （默认从小到大）"></a>sort的比较函数的几种写法 （默认从小到大）</h2><pre><code class="lang-c++">// 对vector排序
+<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h2><pre><code class="lang-c++">// 默认从小到大
+
+// 对vector排序
 sort(v.begin(), v.end(), [](const int&amp; a, const int&amp; b){return a &gt; b;});
 
 // 对数组排序
 sort(arr, arr + 100);
 </code></pre>
 <h2 id="lower-bound"><a href="#lower-bound" class="headerlink" title="lower_bound"></a>lower_bound</h2><p>找到一个大于等于这个数的位置的迭代器</p>
-<pre><code class="lang-c++">pos = lower_bound( number, number + 8, 3) - number  // number数组的下标为0的位置开始
+<p>区别map set的lower_bound内嵌在容器方法中</p>
+<pre><code class="lang-c++">// 数组：number数组的下标为0的位置开始
+pos = lower_bound( number, number + 8, 3) - number  
 
+// vector： 获得当前迭代器
+auto it = lower_bound(v.begin(), v.end(), 3); 
 // 容器只可以返回迭代器， 然后使用distance函数判断跟begin()的距离
-int pos = distance(v.begin(), lower_bound(v.begin(), v.end(), 3));
+int pos = distance(v.begin(), it);
+
+// map set ： 获得第一个大于等于当前数的迭代器
+mp.lower_bound(2);
 </code></pre>
-<h2 id="一维-lt-—-gt-二维"><a href="#一维-lt-—-gt-二维" class="headerlink" title="一维 &lt;—&gt; 二维"></a>一维 &lt;—&gt; 二维</h2><pre><code>第k个元素 -&gt; n * m的矩阵a (都从0开始)
+<h2 id="一维-lt-—-gt-二维"><a href="#一维-lt-—-gt-二维" class="headerlink" title="一维 &lt;—&gt; 二维"></a>一维 &lt;—&gt; 二维</h2><p>下标从0开始</p>
+<pre><code class="lang-c++">// 第k个元素 -&gt; n * m的矩阵a (都从0开始)
 
 // 一维转二维 k -&gt; [x][y]
  x = k / m;
@@ -315,7 +332,8 @@ int pos = distance(v.begin(), lower_bound(v.begin(), v.end(), 3));
 
  // 二维转一维 [x][y] -&gt; k
  k = x * m + y;
-</code></pre><h2 id="自定义结构体并重载小于号"><a href="#自定义结构体并重载小于号" class="headerlink" title="自定义结构体并重载小于号"></a>自定义结构体并重载小于号</h2><ul>
+</code></pre>
+<h2 id="结构体重载小于号"><a href="#结构体重载小于号" class="headerlink" title="结构体重载小于号"></a>结构体重载小于号</h2><ul>
 <li>结构体<code>=</code>为赋值操作，是整个结构体赋值过去。 而类只是浅拷贝</li>
 <li>LeetCode中要写在类的外面</li>
 <li>写在类中LeetCode需要在前面加friend。<a href="http://www.voidcn.com/article/p-okwlzxpt-zm.html" target="_blank" rel="noopener">参考</a></li>
@@ -328,14 +346,14 @@ int pos = distance(v.begin(), lower_bound(v.begin(), v.end(), 3));
 };
 
 // 推荐方式 !!!!!!! 
-bool operator&lt;(const Node&amp; a, const Node&amp; b)
+bool operator&lt; (const Node&amp; a, const Node&amp; b)
 {
     if (a.p1 == b.p1) return a.p2 &lt; b.p2;
     return a.p1 &lt; b.p1;
 }
 
 // 以p1为第一关键字， p2为第二关键字排序  &amp;&amp; 优先级比 || 高
-bool operator&lt;(const Node&amp; a, const Node&amp; b)
+bool operator&lt; (const Node&amp; a, const Node&amp; b)
 {
     // return a.p1 &lt; b.p1 || !(b.p1 &lt; a.p1) &amp;&amp; a.p2 &lt; b.p2;
     return a.p1 &lt; b.p1 || a.p1 == b.p1 &amp;&amp; a.p2 &lt; b.p2;
@@ -346,7 +364,18 @@ Node n1(1, 2);
 <ul>
 <li>为什么重载&lt;号要这样写，而不写成<code>return a.p1 &lt; b.p1 || a.p1 == b.p1 &amp;&amp; a.p2 &lt; b.p2</code>？因为p1和p2是int，他们虽然有重载<code>==</code>。但是对于没有重载<code>==</code>来说,只须重载小于运算符. <a href="https://blog.csdn.net/dpfordor/article/details/1958077" target="_blank" rel="noopener">参考文献</a></li>
 </ul>
-<h2 id="堆之标准比较器构造-对于指针来说可以使用，比较器是反的"><a href="#堆之标准比较器构造-对于指针来说可以使用，比较器是反的" class="headerlink" title="堆之标准比较器构造 (对于指针来说可以使用，比较器是反的)"></a>堆之标准比较器构造 (对于指针来说可以使用，比较器是反的)</h2><pre><code class="lang-c++">
+<h2 id="堆-比较器"><a href="#堆-比较器" class="headerlink" title="堆-比较器"></a>堆-比较器</h2><p>(对于指针来说可以使用，比较器是反的)</p>
+<p>推荐方式：重载()运算</p>
+<pre><code class="lang-c++">struct cmp {
+    bool operator() (pair&lt;int, int&gt; &amp;a, pair&lt;int, int&gt; &amp;b) {
+        return a.first + a.second &lt; b.first + b.second;// 两者的和作为key  逻辑是反的，所以是大根堆
+    }
+};
+
+priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, cmp&gt; q;   // pair&lt;int, int&gt; 整体作为key，不写cmp默认第一个关键字作为key
+</code></pre>
+<p>c++11</p>
+<pre><code class="lang-c++">
 typedef pair&lt;string, int&gt; Node;
 typedef function&lt;bool(const Node&amp;, const Node&amp;)&gt; Compare;
 
@@ -369,23 +398,18 @@ int main()
 <p>关于指针的写法</p>
 <pre><code class="lang-c++">    typedef function&lt;bool(const ListNode*, const ListNode*)&gt; Compare;
 
-
-
     Compare cmp = [](const ListNode *a, const ListNode *b) {
             return a-&gt;val &lt; b-&gt;val;
     };
     // 大根堆
     priority_queue&lt;ListNode*, vector&lt;ListNode*&gt;, Compare&gt; q(cmp);
 </code></pre>
-<h2 id="cin优化"><a href="#cin优化" class="headerlink" title="cin优化"></a>cin优化</h2><pre><code>// 两句话一起写
-ios::sync_with_stdio(false);
-cin.tie(0);
-</code></pre><h2 id="swap交换两个vector"><a href="#swap交换两个vector" class="headerlink" title="swap交换两个vector"></a>swap交换两个vector</h2><ul>
+<h2 id="swap交换vector"><a href="#swap交换vector" class="headerlink" title="swap交换vector"></a>swap交换vector</h2><ul>
 <li>O(1)时间，实质是指针交换</li>
 </ul>
 <pre><code class="lang-c++">swap(v1, v2);
 </code></pre>
-<h2 id="max函数多参数"><a href="#max函数多参数" class="headerlink" title="max函数多参数"></a>max函数多参数</h2><ul>
+<h2 id="max多参数"><a href="#max多参数" class="headerlink" title="max多参数"></a>max多参数</h2><ul>
 <li>C++ 11之后支持传入参数初始化列表</li>
 </ul>
 <pre><code class="lang-c++">int mx = max({a, b, c, d});    // a, b, c, d的最大值
@@ -433,9 +457,9 @@ int n = randX(1, 100);   // n ∈ [1, 100]
 </code></pre>
 </li>
 </ul>
-<h2 id="通过迭代器来初始化容器-hash表-lt-—-gt-vector"><a href="#通过迭代器来初始化容器-hash表-lt-—-gt-vector" class="headerlink" title="通过迭代器来初始化容器 hash表 &lt; — &gt; vector"></a>通过迭代器来初始化容器 hash表 &lt; — &gt; vector</h2><ul>
+<h2 id="迭代器初始化容器"><a href="#迭代器初始化容器" class="headerlink" title="迭代器初始化容器"></a>迭代器初始化容器</h2><ul>
 <li>set(map) &lt;-&gt; vector &lt;-&gt; string</li>
-<li>总之有迭代器的都可以。 stack 和 queue没有</li>
+<li><strong>总之有迭代器的都可以</strong>。 stack 和 queue没有</li>
 </ul>
 <pre><code class="lang-c++">vector&lt;int&gt; a = {3, 2, 1};
 set&lt;int&gt; se(a.begin(), a.end()); // vector -&gt; set
@@ -447,12 +471,12 @@ vector&lt;pair&lt;int, int&gt;&gt; a2(mp.begin(), mp.end());  // map -&gt; vecto
 
 unordered_set&lt;char&gt; se(word.begin(), word.end()); //word 为 string
 </code></pre>
-<h2 id="容器元素为pair的时候不要使用引用"><a href="#容器元素为pair的时候不要使用引用" class="headerlink" title="容器元素为pair的时候不要使用引用"></a>容器元素为pair的时候不要使用引用</h2><pre><code class="lang-c++">deque&lt;pair&lt;int, int&gt;&gt; q;
+<h2 id="pair不要使用引用"><a href="#pair不要使用引用" class="headerlink" title="pair不要使用引用"></a>pair不要使用引用</h2><pre><code class="lang-c++">deque&lt;pair&lt;int, int&gt;&gt; q;
 
 // auto&amp; t = q.front();   // 不要添加引用, 会出现意想不到的错误
 auto t = q.front();
 </code></pre>
-<h2 id="Map-Set遍历时迭代器删除"><a href="#Map-Set遍历时迭代器删除" class="headerlink" title="Map Set遍历时迭代器删除"></a>Map Set遍历时迭代器删除</h2><ul>
+<h2 id="Map-Set遍历时删除迭代器"><a href="#Map-Set遍历时删除迭代器" class="headerlink" title="Map Set遍历时删除迭代器"></a>Map Set遍历时删除迭代器</h2><ul>
 <li>在一边遍历一边删除的时候，可能会引发一下问题，需要正确使用。</li>
 <li>插入同理</li>
 </ul>
@@ -495,6 +519,8 @@ if (s1.find(s2) == std::string::npos) {
 
 for (auto&amp; [key, value] : mp) { }  
 
+for (auto&amp; [_, value] : mp) { }   // 不要key
+
 for (auto&amp; kv : mp) {
     char key = kv.first;
     int value = kv.second;
@@ -516,10 +542,10 @@ for (auto&amp; kv : mp) {
                   <a class="hover-with-bg" href="/categories/C++">C++</a>
                   &nbsp;
                 
-                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
+                  <a class="hover-with-bg" href="/categories/STL">STL</a>
                   &nbsp;
                 
-                  <a class="hover-with-bg" href="/categories/STL">STL</a>
+                  <a class="hover-with-bg" href="/categories/%E6%8A%80%E5%B7%A7">技巧</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
